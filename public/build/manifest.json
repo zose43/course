@@ -1,0 +1,39 @@
+{
+  "resources/images/icons/dropdown-arrow.svg": {
+    "file": "assets/dropdown-arrow.dfa6ea0c.svg",
+    "src": "resources/images/icons/dropdown-arrow.svg"
+  },
+  "resources/images/icons/checked-white.svg": {
+    "file": "assets/checked-white.e3fb40c7.svg",
+    "src": "resources/images/icons/checked-white.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app.dac557fc.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/bootstrap.js",
+      "resources/js/main.js"
+    ]
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap.c5ce4836.js",
+    "src": "resources/js/bootstrap.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/main.js": {
+    "file": "assets/main.c252aae6.js",
+    "src": "resources/js/main.js",
+    "isDynamicEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app.3f676b4c.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/sass/main.sass": {
+    "file": "assets/main.e08dd698.css",
+    "src": "resources/sass/main.sass",
+    "isEntry": true
+  }
+}

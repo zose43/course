@@ -118,6 +118,7 @@ return [
         'telegram' => [
             'driver' => 'custom',
             'via' => TelegramLoggerFactory::class,
+            'tap' => [App\Logging\CustomizeFormatter::class],
             'level' => env('LOG_LEVEL', 'debug'),
             'chat_id' => env('TELEGRAM_CHAT_ID', null),
             'token' => env('TELEGRAM_TOKEN', null),

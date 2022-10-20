@@ -121,10 +121,6 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'chat_id' => env('TELEGRAM_CHAT_ID', null),
             'token' => env('TELEGRAM_TOKEN', null),
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => "%datetime%: %message%\n",
-            ],
         ],
     ],
 

@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use DB;
+use App\Http\Kernel;
+use Carbon\CarbonInterval;
+use Illuminate\Database\Connection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\PDO\Connection;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,13 +28,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /** предотвращает лишнюю загрузку  */
+        /** prevents overloading  */
         Model::preventLazyLoading(!app()->isProduction());
         /** check fillable */
         Model::preventSilentlyDiscardingAttributes((!app()->isProduction()));
 
         /** query execute time */
-        DB::whenQueryingForLongerThan(500, function (Connection $connection) {            // todo logger
+        DB::whenQueryingForLongerThan(500, static function (Connection $connection) {
+            logger()?->channel('telegram')->debug(__METHOD__ . ', sql: ' . $connection->query()->toSql());
+        });
+
+        /** request cycle */
+        app(Kernel::class)->whenRequestLifecycleIsLongerThan(CarbonInterval::seconds(3), static function () {
+            logger()?->channel('telegram')->debug(__METHOD__ . ', url: ' . request()?->url());
         });
     }
 }

@@ -7,19 +7,19 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('brands', static function (Blueprint $table) {
+        Schema::create('slug', static function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('title');
-            $table->string('thumbnail')->nullable();
-            $table->timestamps();
+            $table->smallInteger('repeat')->unsigned()->default(0);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
     public function down(): void
     {
-        if (app()->isLocal()) {
-            Schema::dropIfExists('brands');
+        if (!app()->isProduction()) {
+            Schema::dropIfExists('slug');
         }
     }
 };

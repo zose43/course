@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         Brand::factory(10)->create();
         Category::factory(10)
-            ->has(Product::factory(random_int(3, 12)))
+            ->has(Product::factory(random_int(3, 12))->cheapen())
             ->create();
     }
 }

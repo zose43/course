@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\GenerateSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,19 +10,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Brand extends Model
 {
     use HasFactory;
+    use GenerateSlug;
 
     protected $fillable = [
         'title',
         'thumbnail',
+        'repeat_count',
     ];
 
-    protected static function boot(): void
+    protected $hidden = ['repeat_count'];
+
+    protected static function slugAttributeName(): string
     {
-        parent::boot();
-        // TODO 3rd lesson
-        self::creating(static function (Brand $brand) {
-            $brand->slug = str($brand->title)->slug();
-        });
+        return 'title';
     }
 
     public function products(): HasMany

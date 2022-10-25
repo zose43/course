@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Brand::factory(10)->create();
+        Category::factory(10)
+            ->has(Product::factory(random_int(3, 12))->cheapen())
+            ->create();
     }
 }

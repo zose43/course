@@ -17,8 +17,9 @@ class BrandFactory extends Factory
     {
         return [
             'title' => $this->faker->company(),
-            // TODO 3rd lesson
-            'thumbnail' => '',
+            'thumbnail' => $this->faker->localImage(
+                base_path('tests/Fixtures/images/brands'),
+                storage_path('app/public/images/brands')),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

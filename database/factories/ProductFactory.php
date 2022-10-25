@@ -14,12 +14,23 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'thumbnail' => '',
+            'thumbnail' => $this->faker->localImage(
+                base_path('tests/Fixtures/images/products'),
+                storage_path('app/public/images/products')),
             'price' => $this->faker->numberBetween(500, 100000),
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'brand_id' => Brand::query()->inRandomOrder()->value('id'),
         ];
+    }
+
+    public function cheapen(): self
+    {
+        return $this->state(function ($attributes) {
+            return [
+                'price' => $this->faker->numberBetween(100, 2500),
+            ];
+        });
     }
 }

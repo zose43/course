@@ -3,13 +3,11 @@
 namespace App\Providers;
 
 use DB;
-use Faker\Factory;
 use App\Http\Kernel;
-use Faker\Generator;
 use Carbon\CarbonInterval;
-use App\Faker\FakerImageProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,15 +16,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(): void
-    {
-        $this->app->singleton(Generator::class, static function () {
-            $faker = Factory::create();
-            $faker->addProvider(new FakerImageProvider($faker));
-
-            return $faker;
-        });
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
@@ -56,5 +46,12 @@ class AppServiceProvider extends ServiceProvider
                 logger()?->channel('telegram')->debug(__METHOD__ . ', url: ' . request()?->url());
             });
         }
+
+        Password::defaults(static function () {
+            /** uncompromised --> no repeats */
+            return Password::min(8);
+//                ->mixedCase()
+//                ->uncompromised();
+        });
     }
 }

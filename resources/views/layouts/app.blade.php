@@ -9,6 +9,11 @@
     @vite(['resources/css/app.css','resources/js/app.js','resources/sass/main.sass'])
 </head>
 <body class="antialiased">
-
+    @if($msg = flash()->message())
+        <div class="{{ $msg->getClass() }} p-5">
+            {{ $msg->getMessage() }}
+        </div>
+    @endif
+    @yield('content')
 </body>
 </html>

@@ -6,9 +6,6 @@ use App\Models\Brand;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Brand>
- */
 class BrandFactory extends Factory
 {
     protected $model = Brand::class;

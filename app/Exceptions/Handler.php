@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Throwable;
+use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -38,6 +39,12 @@ class Handler extends ExceptionHandler
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }
+        });
+
+        $this->renderable(static function (DomainException $e) {
+            flash()->alert($e->getMessage());
+
+            return back();
         });
     }
 }

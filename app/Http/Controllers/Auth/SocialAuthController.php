@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use Throwable;
 use DomainException;
-use Domain\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
+use Domain\Auth\Actions\GithubCallbackAction;
+use Domain\Auth\Contracts\SocialiteCallbackContract;
 
 class SocialAuthController extends Controller
 {
@@ -22,25 +23,14 @@ class SocialAuthController extends Controller
         }
     }
 
-    public function callback(string $driver): RedirectResponse
+    public function callback(string $driver, SocialiteCallbackContract $action): RedirectResponse
     {
         if ($driver !== self::GITHUB) {
             throw new DomainException('Драйвер не поддерживается');
         }
 
-        $githubUser = Socialite::driver($driver)->user();
-        /**
-         * create socialite table, user table has relations
-         */
-        $user = User::query()->updateOrCreate([
-            $driver . '_id' => $githubUser->id,
-        ], [
-            'name' => $githubUser->name,
-            'email' => $githubUser->email,
-            'password' => bcrypt(str()->random(20)),
-        ]);
-
-        auth()->login($user);
+        /** @var GithubCallbackAction $action */
+        $action($driver);
 
         return redirect()->intended(route('home'));
     }

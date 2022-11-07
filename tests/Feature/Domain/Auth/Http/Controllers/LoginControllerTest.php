@@ -41,6 +41,20 @@ class LoginControllerTest extends BaseAuthController
     /**
      * @test
      */
+    public function is_login_handle_failed(): void
+    {
+        $request = SignUpFormRequest::factory()->create();
+        $response = $this->post(action([SignInController::class, 'handle']), $request);
+
+        $response->assertInvalid()->
+        assertSessionHasErrors(['email' => 'Неверно введены данные']);
+
+        $this->assertGuest();
+    }
+
+    /**
+     * @test
+     */
     public function is_logout_success(): void
     {
         $password = '12345678';

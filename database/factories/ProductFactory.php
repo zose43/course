@@ -22,6 +22,8 @@ class ProductFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'brand_id' => Brand::query()->inRandomOrder()->value('id'),
+            'on_main_page' => $this->faker->boolean(),
+            'sorting' => $this->faker->numberBetween(1, 999),
         ];
     }
 

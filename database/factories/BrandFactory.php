@@ -19,6 +19,8 @@ class BrandFactory extends Factory
                 storage_path('app/public/images/brands')),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'on_main_page' => $this->faker->boolean(),
+            'sorting' => $this->faker->numberBetween(1, 999),
         ];
     }
 }

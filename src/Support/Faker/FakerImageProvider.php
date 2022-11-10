@@ -30,7 +30,8 @@ class FakerImageProvider extends Base
 
             return null;
         }
+        $path = '/storage' . preg_replace('/.*\/app\/public/', '', $dir) . '/';
 
-        return '/storage/' . $image->getFilename();
+        return $path . $image->getFilename();
     }
 }

@@ -16,6 +16,8 @@ class CategoryFactory extends Factory
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'on_main_page' => $this->faker->boolean(),
+            'sorting' => $this->faker->numberBetween(1, 999),
         ];
     }
 }

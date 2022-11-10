@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Models\GenerateSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,8 @@ class Brand extends Model
         'title',
         'thumbnail',
         'repeat_count',
+        'on_main_page',
+        'sorting',
     ];
 
     protected $hidden = ['repeat_count'];
@@ -28,5 +31,10 @@ class Brand extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function scopeHomePage(Builder $query): Builder
+    {
+        return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
     }
 }

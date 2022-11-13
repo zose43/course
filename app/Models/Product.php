@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\GenerateSlug;
+use App\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,9 @@ class Product extends Model
 {
     use HasFactory;
     use GenerateSlug;
+    use HasThumbnail;
+
+    public const THUMBNAIL_DIR = 'products';
 
     protected $fillable = [
         'title',

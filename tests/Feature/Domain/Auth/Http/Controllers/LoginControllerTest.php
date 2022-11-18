@@ -22,8 +22,15 @@ class LoginControllerTest extends BaseAuthController
      */
     public function is_login_page_success(): void
     {
+        $this->get(action([SignInController::class, 'page']))->assertOk();
+    }
+
+    /**
+     * @test
+     */
+    public function is_login_page_view(): void
+    {
         $this->get(action([SignInController::class, 'page']))
-            ->assertOk()
             ->assertViewIs('auth.login')
             ->assertSee('Вход в аккаунт');
     }

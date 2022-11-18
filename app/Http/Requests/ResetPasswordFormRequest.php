@@ -4,9 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+use Worksome\RequestFactories\Concerns\HasFactory;
 
 class ResetPasswordFormRequest extends FormRequest
 {
+    use HasFactory;
+
     public function rules(): array
     {
         return [

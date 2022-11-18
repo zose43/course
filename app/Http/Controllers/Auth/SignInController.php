@@ -18,7 +18,7 @@ class SignInController extends Controller
     {
         if (!auth()->attempt($request->validated())) {
             return back()->withErrors([
-                'email' => 'Неверно введенны данные',
+                'email' => 'Неверно введены данные',
             ])->onlyInput('email');
         }
         $request->session()->regenerate();

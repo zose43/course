@@ -85,6 +85,7 @@ class SignUpControllerTest extends BaseAuthController
      */
     public function is_event_trigger(): void
     {
+        Event::fake();
         $this->post(action([SignUpController::class, 'handle']), $this->request);
         $user = User::query()->where('email', self::EMAIL)->first();
         $this->initEvent($user);
@@ -97,6 +98,7 @@ class SignUpControllerTest extends BaseAuthController
      */
     public function is_event_listener_exist(): void
     {
+        Event::fake();
         $this->post(action([SignUpController::class, 'handle']), $this->request);
         $user = User::query()->where('email', self::EMAIL)->first();
         $this->initEvent($user);
@@ -109,7 +111,6 @@ class SignUpControllerTest extends BaseAuthController
      */
     public function is_notification_send(): void
     {
-        $user = User::query()->where('email', self::EMAIL)->first();
         $this->post(action([SignUpController::class, 'handle']), $this->request);
         $user = User::query()->where('email', self::EMAIL)->first();
         $this->initEvent($user);

@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\SignInController;
 /**
  * @coversDefaultClass SignInController
  */
-class LoginControllerTest extends BaseAuthController
+class SignInControllerTest extends BaseAuthController
 {
     protected function setUp(): void
     {

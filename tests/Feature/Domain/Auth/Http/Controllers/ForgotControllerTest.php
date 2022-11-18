@@ -54,24 +54,23 @@ class ForgotControllerTest extends BaseAuthController
      * @test
      * @covers ForgotPasswordController::handle
      */
-    public function is_reset_link_sent(): void
+    public function is_forgot_handle_success(): void
     {
-        Password::shouldReceive('sendResetLink')
-            ->once()->with($this->request)->andReturn('passwords.sent');
+        $response = $this->post(action([ForgotPasswordController::class, 'handle']), $this->request);
 
-        $this->post(action([ForgotPasswordController::class, 'handle']), $this->request);
+        $response->assertValid();
     }
 
     /**
      * @test
      * @covers ForgotPasswordController::handle
      */
-    public function is_forgot_handle_success(): void
+    public function is_notification_send(): void
     {
-        $response = $this->post(action([ForgotPasswordController::class, 'handle']), $this->request);
+        Password::shouldReceive('sendResetLink')
+            ->once()->with($this->request)->andReturn('passwords.sent');
 
-        $response->assertValid()->
-        assertSessionHasNoErrors();
+        $this->post(action([ForgotPasswordController::class, 'handle']), $this->request);
     }
 
     /**

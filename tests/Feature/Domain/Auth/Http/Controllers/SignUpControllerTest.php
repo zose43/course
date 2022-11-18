@@ -16,11 +16,6 @@ use App\Http\Controllers\Auth\SignUpController;
  */
 class SignUpControllerTest extends BaseAuthController
 {
-    protected const EMAIL = 'test@mail.ru';
-
-    private string $table = 'users';
-    private array $request;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -61,7 +56,7 @@ class SignUpControllerTest extends BaseAuthController
      */
     public function is_database_missing(): void
     {
-        $this->assertDatabaseMissing($this->table, ['email' => $this->request['email']]);
+        $this->assertDatabaseMissing(self::TABLE, ['email' => $this->request['email']]);
     }
 
     /**
@@ -81,7 +76,7 @@ class SignUpControllerTest extends BaseAuthController
     public function is_database_has(): void
     {
         $this->post(action([SignUpController::class, 'handle']), $this->request);
-        $this->assertDatabaseHas($this->table, ['email' => $this->request['email']]);
+        $this->assertDatabaseHas(self::TABLE, ['email' => $this->request['email']]);
     }
 
     /**

@@ -10,8 +10,6 @@ use App\Http\Controllers\Auth\SignInController;
  */
 class LoginControllerTest extends BaseAuthController
 {
-    private array $request;
-
     protected function setUp(): void
     {
         parent::setUp();

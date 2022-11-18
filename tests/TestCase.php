@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Http;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -18,5 +20,7 @@ abstract class TestCase extends BaseTestCase
          * if in test required real request --> use Http::allowStrayRequests()
          */
         Http::preventStrayRequests();
+        Notification::fake();
+        Event::fake();
     }
 }

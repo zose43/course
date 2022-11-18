@@ -2,11 +2,23 @@
 
 namespace Tests\Feature\Domain\Auth\Http\Controllers;
 
-use App\Http\Requests\SignUpFormRequest;
+use App\Http\Requests\SignInFormRequest;
 use App\Http\Controllers\Auth\SignInController;
 
+/**
+ * @coversDefaultClass SignInController
+ */
 class LoginControllerTest extends BaseAuthController
 {
+    private array $request;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->request = SignInFormRequest::factory()->create();
+    }
+
     /**
      * @test
      */
@@ -21,19 +33,30 @@ class LoginControllerTest extends BaseAuthController
     /**
      * @test
      */
-    public function is_login_handle_success(): void
+    public function is_login_handle_success(): array
     {
         $password = '12345678';
         $user = $this->createUser($password);
-        $request = SignUpFormRequest::factory()->create([
-            'email' => $user->email,
-            'password' => $password,
-        ]);
+        $this->request['email'] = $user->email;
+        $this->request['password'] = $password;
 
-        $response = $this->post(action([SignInController::class, 'handle']), $request);
+        $response = $this->post(action([SignInController::class, 'handle']), $this->request);
 
         $response->assertValid()->
         assertRedirect(route('home'));
+
+        return $this->request;
+    }
+
+    /**
+     * @test
+     * @depends is_login_handle_success
+     */
+    public function is_authenticated_as(array $request): void
+    {
+        $password = '12345678';
+        $user = $this->createUser($password);
+        $this->post(action([SignInController::class, 'handle']), $request);
 
         $this->assertAuthenticatedAs($user);
     }
@@ -43,11 +66,18 @@ class LoginControllerTest extends BaseAuthController
      */
     public function is_login_handle_failed(): void
     {
-        $request = SignUpFormRequest::factory()->create();
-        $response = $this->post(action([SignInController::class, 'handle']), $request);
+        $response = $this->post(action([SignInController::class, 'handle']), $this->request);
 
         $response->assertInvalid()->
         assertSessionHasErrors(['email' => 'Неверно введены данные']);
+    }
+
+    /**
+     * @test
+     */
+    public function is_guest(): void
+    {
+        $this->post(action([SignInController::class, 'handle']), $this->request);
 
         $this->assertGuest();
     }
@@ -63,7 +93,6 @@ class LoginControllerTest extends BaseAuthController
         $response = $this->actingAs($user)->
         delete(action([SignInController::class, 'logOut']));
 
-        $this->assertGuest();
         $response->assertRedirect(route('home'));
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Domain\Catalog\Models;
 
+use App\Models\Product;
 use Support\Traits\Models\GenerateSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;

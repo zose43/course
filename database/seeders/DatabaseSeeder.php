@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
-use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Domain\Catalog\Models\Brand;
+use Domain\Catalog\Models\Product;
+use Domain\Catalog\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {

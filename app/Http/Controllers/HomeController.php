@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\View\View;
+use Domain\Catalog\Models\Brand;
+use Domain\Catalog\Models\Category;
 
 class HomeController extends Controller
 {

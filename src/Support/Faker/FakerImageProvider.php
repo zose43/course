@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class FakerImageProvider extends Base
 {
-    public function localImage(string $source, string $dir): ?string
+    public function localImage(string $source, string $dir, string $relative): ?string
     {
         if (!File::exists($dir)) {
             File::makeDirectory($dir, recursive: true);
@@ -31,6 +31,6 @@ class FakerImageProvider extends Base
             return null;
         }
 
-        return '/storage/' . $image->getFilename();
+        return "/storage$relative" . $image->getFilename();
     }
 }

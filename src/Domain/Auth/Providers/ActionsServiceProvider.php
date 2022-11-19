@@ -3,10 +3,8 @@
 namespace Domain\Auth\Providers;
 
 use Carbon\Laravel\ServiceProvider;
-use Domain\Auth\Actions\SignInNewUserAction;
 use Domain\Auth\Actions\GithubCallbackAction;
 use Domain\Auth\Actions\RegisterNewUserAction;
-use Domain\Auth\Contracts\SignInNewUserContract;
 use Domain\Auth\Contracts\RegisterNewUserContract;
 use Domain\Auth\Contracts\SocialiteCallbackContract;
 

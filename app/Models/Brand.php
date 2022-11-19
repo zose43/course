@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Traits\Models\GenerateSlug;
+use App\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,11 +13,16 @@ class Brand extends Model
 {
     use HasFactory;
     use GenerateSlug;
+    use HasThumbnail;
+
+    public const THUMBNAIL_DIR = 'brands';
 
     protected $fillable = [
         'title',
         'thumbnail',
         'repeat_count',
+        'on_main_page',
+        'sorting',
     ];
 
     protected $hidden = ['repeat_count'];
@@ -28,5 +35,10 @@ class Brand extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function scopeHomePage(Builder $query): Builder
+    {
+        return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
     }
 }

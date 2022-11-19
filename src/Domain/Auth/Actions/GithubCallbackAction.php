@@ -15,10 +15,10 @@ class GithubCallbackAction implements SocialiteCallbackContract
          * create socialite table, user table has relations
          */
         $user = User::query()->updateOrCreate([
-            $driver . '_id' => $githubUser->id,
+            $driver . '_id' => $githubUser->getId(),
         ], [
-            'name' => $githubUser->name ?? "user_$githubUser->id",
-            'email' => $githubUser->email,
+            'name' => $githubUser->getName() ?? ('user_' . $githubUser->getId()),
+            'email' => $githubUser->getEmail(),
             'password' => bcrypt(str()->random(20)),
         ]);
 

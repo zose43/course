@@ -23,4 +23,13 @@ class NewUserDTO
             'name',
         ]));
     }
+
+    public function getProperties(): array
+    {
+        return [
+            'email' => $this->email,
+            'password' => $this->password,
+            'name' => $this->name,
+        ];
+    }
 }

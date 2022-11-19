@@ -6,7 +6,7 @@ use Throwable;
 use Illuminate\Support\Facades\Http;
 use App\Exceptions\TelegramApiException;
 
-class TelegramBotApi
+class TelegramBotApi implements TelegramBotApiContract
 {
     public const HOST = 'https://api.telegram.org/bot';
 
@@ -26,5 +26,11 @@ class TelegramBotApi
         } catch (Throwable $e) {
             throw new TelegramApiException($e->getMessage());
         }
+    }
+
+    /** @see TelegramBotApiFake */
+    public static function fake(): TelegramBotApiContract
+    {
+        return app()->instance(TelegramBotApiContract::class, new TelegramBotApiFake());
     }
 }

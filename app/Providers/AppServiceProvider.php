@@ -5,9 +5,11 @@ namespace App\Providers;
 use DB;
 use App\Http\Kernel;
 use Carbon\CarbonInterval;
+use Services\Telegram\TelegramBotApi;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Password;
+use Services\Telegram\TelegramBotApiContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,5 +55,7 @@ class AppServiceProvider extends ServiceProvider
 //                ->mixedCase()
 //                ->uncompromised();
         });
+
+        $this->app->bind(TelegramBotApiContract::class, TelegramBotApi::class);
     }
 }

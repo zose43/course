@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Support\Carbon;
-use App\Traits\Factories\HasSorting;
-use App\Traits\Factories\HasMainPage;
+use Support\Traits\Factories\HasSorting;
+use Support\Traits\Factories\HasMainPage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CategoryFactory extends Factory

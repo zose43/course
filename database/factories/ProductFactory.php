@@ -5,10 +5,15 @@ namespace Database\Factories;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Support\Carbon;
+use App\Traits\Factories\HasSorting;
+use App\Traits\Factories\HasMainPage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
 {
+    use HasMainPage;
+    use HasSorting;
+
     protected $model = Product::class;
 
     public function definition(): array

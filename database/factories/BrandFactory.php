@@ -12,11 +12,14 @@ class BrandFactory extends Factory
 
     public function definition(): array
     {
+        $path = '/images/brands/';
+
         return [
             'title' => $this->faker->company(),
             'thumbnail' => $this->faker->localImage(
-                base_path('tests/Fixtures/images/brands'),
-                storage_path('app/public/images/brands')),
+                base_path("tests/Fixtures$path"),
+                storage_path("app/public$path"),
+                $path),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'on_main_page' => $this->faker->boolean(),

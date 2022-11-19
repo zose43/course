@@ -13,10 +13,13 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
+        $path = '/images/products/';
+
         return [
             'thumbnail' => $this->faker->localImage(
-                base_path('tests/Fixtures/images/products'),
-                storage_path('app/public/images/products')),
+                base_path("tests/Fixtures$path"),
+                storage_path("app/public$path"),
+                $path),
             'price' => $this->faker->numberBetween(500, 100000),
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),

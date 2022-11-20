@@ -8,8 +8,12 @@ use Support\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Domain\Catalog\QueryBuilders\BrandQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @method static Brand|BrandQueryBuilder query()
+ */
 class Brand extends Model
 {
     use HasFactory;
@@ -38,8 +42,8 @@ class Brand extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function scopeHomePage(Builder $query): Builder
+    public function newEloquentBuilder($query): Builder
     {
-        return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
+        return new BrandQueryBuilder($query);
     }
 }

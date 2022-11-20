@@ -6,9 +6,15 @@ use App\Models\Product;
 use Support\Traits\Models\GenerateSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Domain\Catalog\Collections\CategoryCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Domain\Catalog\QueryBuilders\CategoryQueryBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static CategoryQueryBuilder|Category query()
+ */
 class Category extends Model
 {
     use HasFactory;
@@ -33,8 +39,13 @@ class Category extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function scopeHomePage(Builder $query): Builder
+    public function newEloquentBuilder($query): Builder
     {
-        return $query->where('on_main_page', true)->orderBy('sorting')->limit(10);
+        return new CategoryQueryBuilder($query);
+    }
+
+    public function newCollection(array $models = []): Collection
+    {
+        return new CategoryCollection($models);
     }
 }

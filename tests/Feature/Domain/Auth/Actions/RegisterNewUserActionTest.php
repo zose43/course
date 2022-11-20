@@ -16,8 +16,6 @@ class RegisterNewUserActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public const TABLE = 'users';
-
     private array $request;
 
     protected function setUp(): void
@@ -33,7 +31,7 @@ class RegisterNewUserActionTest extends TestCase
     public function is_success_user_created(): void
     {
         $this->assertDatabaseMissing(self::TABLE, ['email' => $this->request['email']]);
-        
+
         $action = app(RegisterNewUserContract::class);
         $action(NewUserDTO::fromRequest(new SignUpFormRequest($this->request)));
 

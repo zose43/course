@@ -10,6 +10,9 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    protected const EMAIL = 'test@mail.ru';
+    protected const TABLE = 'users';
+
     protected function setUp(): void
     {
         parent::setUp();

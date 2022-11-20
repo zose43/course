@@ -3,11 +3,9 @@
 namespace Tests\Feature\Domain\Auth\Http\Controllers;
 
 use DomainException;
-use Mockery\MockInterface;
 use Database\Factories\UserFactory;
 use Illuminate\Testing\TestResponse;
-use Laravel\Socialite\Contracts\User;
-use Laravel\Socialite\Facades\Socialite;
+use Tests\Fixtures\Traits\GithubCallbackAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Controllers\Auth\SocialAuthController;
 
@@ -17,45 +15,12 @@ use App\Http\Controllers\Auth\SocialAuthController;
 class SocialAuthControllerTest extends BaseAuthController
 {
     use RefreshDatabase;
-
-    private string|int $githubId;
-
-    private function mockSocialiteCallback(): MockInterface
-    {
-        /** Multiply method mock in 1 class */
-        $user = $this->mock(User::class, function (MockInterface $m) {
-            $m->shouldReceive('getName')
-                ->once()
-                ->andReturn(str()->random(10));
-
-            $m->shouldReceive('getId')
-                ->once()
-                ->andReturn($this->githubId);
-
-            $m->shouldReceive('getEmail')
-                ->once()
-                ->andReturn(self::EMAIL);
-        });
-
-        /** mock chain methods */
-        Socialite::shouldReceive('driver->user')
-            ->once()
-            ->andReturn($user);
-
-        return $user;
-    }
+    use GithubCallbackAction;
 
     private function callbackRequest(): TestResponse
     {
         return $this->get(action([SocialAuthController::class, 'callback'],
-            ['driver' => 'github']));
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->githubId = str()->random(10);
+            ['driver' => $this->driver]));
     }
 
     /**
@@ -65,7 +30,7 @@ class SocialAuthControllerTest extends BaseAuthController
     public function is_github_redirect_success(): void
     {
         $response = $this->get(action([SocialAuthController::class, 'redirect'],
-            ['driver' => 'github']));
+            ['driver' => $this->driver]));
 
         $response->assertRedirectContains('github.com');
     }

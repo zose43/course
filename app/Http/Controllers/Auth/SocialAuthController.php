@@ -30,7 +30,8 @@ class SocialAuthController extends Controller
         }
 
         /** @var GithubCallbackAction $action */
-        $action($driver);
+        $user = $action($driver);
+        auth()->login($user);
 
         return redirect()->intended(route('home'));
     }

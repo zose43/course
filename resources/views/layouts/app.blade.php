@@ -18,5 +18,6 @@
         </div>
     </main>
     @include('shared.footer')
+    @include('shared.main-mobile')
 </body>
 </html>

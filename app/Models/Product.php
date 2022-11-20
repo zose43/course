@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\Models\GenerateSlug;
-use App\Traits\Models\HasThumbnail;
+use Support\Casts\PriceCast;
+use Domain\Catalog\Models\Brand;
+use Domain\Catalog\Models\Category;
+use Support\Traits\Models\GenerateSlug;
+use Support\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +29,10 @@ class Product extends Model
         'repeat_count',
         'on_main_page',
         'sorting',
+    ];
+
+    protected $casts = [
+        'price' => PriceCast::class,
     ];
 
     protected $hidden = ['repeat_count'];

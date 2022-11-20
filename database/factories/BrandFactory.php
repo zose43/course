@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Brand;
 use Illuminate\Support\Carbon;
-use App\Traits\Factories\HasSorting;
-use App\Traits\Factories\HasMainPage;
+use Domain\Catalog\Models\Brand;
+use Support\Traits\Factories\HasSorting;
+use Support\Traits\Factories\HasMainPage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BrandFactory extends Factory

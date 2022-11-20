@@ -2,7 +2,7 @@
 
 namespace Domain\Auth\DTOs;
 
-use Support\Traits\Makeable;
+use Support\Traits\DTOs\Makeable;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewUserDTO

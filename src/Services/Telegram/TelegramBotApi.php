@@ -28,7 +28,6 @@ class TelegramBotApi implements TelegramBotApiContract
         }
     }
 
-    /** @see TelegramBotApiFake */
     public static function fake(): TelegramBotApiContract
     {
         return app()->instance(TelegramBotApiContract::class, new TelegramBotApiFake());

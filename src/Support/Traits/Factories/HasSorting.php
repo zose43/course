@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Factories;
+namespace Support\Traits\Factories;
 
 trait HasSorting
 {

@@ -3,6 +3,7 @@
 namespace Tests\Feature\App\Http\Controllers;
 
 use Tests\TestCase;
+use Database\Factories\UserFactory;
 use Database\Factories\BrandFactory;
 use Database\Factories\ProductFactory;
 use Database\Factories\CategoryFactory;
@@ -41,5 +42,35 @@ class HomeControllerTest extends TestCase
                 'brands.0' => $brand,
                 'categories.0' => $category,
             ]);
+    }
+
+    /**
+     * @test
+     */
+    public function is_advantage_block_exist(): void
+    {
+        $this->get(action([HomeController::class]))
+            ->assertSee('Наши преимущества');
+    }
+
+    /**
+     * @test
+     */
+    public function is_authenticated_user_name_exist(): void
+    {
+        $name = 'Kirill test';
+        $user = UserFactory::new()->create(['name' => $name]);
+        $this->actingAs($user)
+            ->get(action([HomeController::class]))
+            ->assertSee($name);
+    }
+
+    /**
+     * @test
+     */
+    public function is_personal_cabinet_exist(): void
+    {
+        $this->get(action([HomeController::class]))
+            ->assertSee('Войти');
     }
 }

@@ -22,6 +22,8 @@ class RefreshCommand extends Command
             storage_path('/app/public/images/products'),
         ];
 
+        $this->call('cache:clear');
+
         foreach ($dirs as $dir) {
             File::cleanDirectory($dir);
         }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Support\enums\Paths;
 use Illuminate\Support\Carbon;
 use Domain\Catalog\Models\Brand;
 use Support\Traits\Factories\HasSorting;
@@ -17,14 +18,12 @@ class BrandFactory extends Factory
 
     public function definition(): array
     {
-        $path = '/images/brands/';
-
         return [
             'title' => $this->faker->company(),
             'thumbnail' => $this->faker->localImage(
-                base_path("tests/Fixtures$path"),
-                storage_path("app/public$path"),
-                $path),
+                Paths::FIXTURE_PATH . '/images' . Paths::BrandImages->value,
+                Paths::BrandImages->value
+            ),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'on_main_page' => $this->faker->boolean(),

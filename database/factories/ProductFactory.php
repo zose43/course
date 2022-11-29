@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use Support\enums\Paths;
 use Illuminate\Support\Carbon;
 use Domain\Catalog\Models\Brand;
 use Support\Traits\Factories\HasSorting;
@@ -18,13 +19,11 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
-        $path = '/images/products/';
-
         return [
             'thumbnail' => $this->faker->localImage(
-                base_path("tests/Fixtures$path"),
-                storage_path("app/public$path"),
-                $path),
+                Paths::FIXTURE_PATH . '/images' . Paths::ProductImages->value,
+                Paths::ProductImages->value
+            ),
             'price' => $this->faker->numberBetween(500, 100000),
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),

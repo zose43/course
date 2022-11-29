@@ -8,6 +8,8 @@ class BrandQueryBuilder extends Builder
 {
     public function homePage(): self
     {
-        return $this->where('on_main_page', true)->orderBy('sorting')->limit(6);
+        return $this->where('on_main_page', true)
+            ->orderBy('sorting')
+            ->limit(6);
     }
 }

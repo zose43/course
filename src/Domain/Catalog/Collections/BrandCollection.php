@@ -2,7 +2,9 @@
 
 namespace Domain\Catalog\Collections;
 
-class BrandCollection
+use Illuminate\Database\Eloquent\Collection;
+
+class BrandCollection extends Collection
 {
 
 }

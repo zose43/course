@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Http;
+use Storage;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -23,5 +24,6 @@ abstract class TestCase extends BaseTestCase
          */
         Http::preventStrayRequests();
         Notification::fake();
+        Storage::fake('images');
     }
 }

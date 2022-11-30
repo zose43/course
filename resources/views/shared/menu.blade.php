@@ -1,5 +1,5 @@
 <nav class="hidden 2xl:flex gap-8">
-    @foreach($menu->all() as $item)
+    @foreach($menu as $item)
         <a href="{{ $item->getLink() }}" class="text-white hover:text-pink @if($item->isActive()) font-bold @endif">
             {{ $item->getLabel() }}
         </a>

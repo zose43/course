@@ -13,12 +13,12 @@ class CategoryViewModel
 
     public function homePage(): Collection|array
     {
-        // TODO reddis/memcache, add tag, add observers (create/delete/update)
-        return Cache::rememberForever('category_home_page', static function () {
-            return Category::query()
-                ->select(['id', 'title', 'slug'])
-                ->homePage()
-                ->get();
-        });
+        return Cache::tags(['main_page', 'category'])
+            ->rememberForever('category_home_page', function () {
+                return Category::query()
+                    ->select(['id', 'title', 'slug'])
+                    ->homePage()
+                    ->get();
+            });
     }
 }

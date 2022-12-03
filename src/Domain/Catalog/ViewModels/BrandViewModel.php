@@ -13,12 +13,12 @@ class BrandViewModel
 
     public function homePage(): Collection|array
     {
-        // TODO reddis/memcache, add tag, add observers (create/delete/update)
-        return Cache::rememberForever('brand_home_page', static function () {
-            return Brand::query()
-                ->select(['id', 'title', 'slug', 'thumbnail'])
-                ->homePage()
-                ->get();
-        });
+        return Cache::tags(['main_page', 'brand'])
+            ->rememberForever('brand_home_page', function () {
+                return Brand::query()
+                    ->select(['id', 'title', 'slug', 'thumbnail'])
+                    ->homePage()
+                    ->get();
+            });
     }
 }

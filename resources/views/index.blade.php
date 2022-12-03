@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('main.shared.advantages')
+    @include('shared.advantages')
 
     <section class="mt-16 lg:mt-24">
         <!-- Section heading -->

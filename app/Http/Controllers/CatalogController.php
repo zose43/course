@@ -8,6 +8,7 @@ use Domain\Catalog\Models\Category;
 
 class CatalogController extends Controller
 {
+    // TODO cache and select needed query items
     public function __invoke(?Category $category)
     {
         $products = Product::query()
@@ -21,6 +22,11 @@ class CatalogController extends Controller
             ->has('products')
             ->get();
 
-        return view('catalog.index', compact('products', 'brands', 'categories'));
+        return view('catalog.index', compact(
+            'products',
+            'brands',
+            'categories',
+            'category'
+        ));
     }
 }

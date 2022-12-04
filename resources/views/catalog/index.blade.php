@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $category->title ?? 'Каталог')
+
 @section('content')
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs flex flex-wrap gap-y-1 gap-x-4 mb-6">
@@ -35,14 +37,12 @@
 
                 <!-- Products list -->
                 <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
-                    @if($products->isNotEmpty())
-                        @each('catalog.shared.product',$products, 'item')
-                    @endif
+                    @each('catalog.shared.product',$products, 'item')
                 </div>
 
                 <!-- Page pagination -->
                 <div class="mt-12">
-                    @include('catalog.shared.pagination')
+                    {{ $products->withQueryString()->links() }}
                 </div>
             </div>
         </div>

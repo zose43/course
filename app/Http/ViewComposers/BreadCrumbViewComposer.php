@@ -16,7 +16,7 @@ class BreadCrumbViewComposer
             ->add(BreadCrumbItem::make('Главная', route('home')))
             ->add(BreadCrumbItem::make('Каталог', route('catalog')))
             ->addIf($category !== null,
-                BreadCrumbItem::make($category?->slug ?? '', route('catalog', $category)));
+                BreadCrumbItem::make($category->slug ?? '', route('catalog', $category)));
 
         return $view->with('breadcrumbs', $breadcrumbs);
     }

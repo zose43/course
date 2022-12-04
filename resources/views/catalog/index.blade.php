@@ -12,7 +12,9 @@
 
         <!-- Categories -->
         <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mt-8">
-            @each('catalog.shared.category',$categories,'item')
+            @if($categories->isNotEmpty())
+                @each('catalog.shared.category',$categories,'item')
+            @endif
         </div>
     </section>
 
@@ -33,12 +35,14 @@
 
                 <!-- Products list -->
                 <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
-                    @each('catalog.shared.product',$products, 'item')
+                    @if($products->isNotEmpty())
+                        @each('catalog.shared.product',$products, 'item')
+                    @endif
                 </div>
 
                 <!-- Page pagination -->
                 <div class="mt-12">
-                    @@include('parts/pagination.html')
+                    @include('catalog.shared.pagination')
                 </div>
             </div>
         </div>

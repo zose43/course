@@ -1,4 +1,6 @@
-<form class="overflow-auto max-h-[320px] lg:max-h-[100%] space-y-10 p-6 2xl:p-8 rounded-2xl bg-card">
+<form class="overflow-auto max-h-[320px] lg:max-h-[100%] space-y-10 p-6 2xl:p-8 rounded-2xl bg-card"
+      method="POST"
+      action="{{ empty($category) ? '#' : route('catalog', $category) }}">
     <!-- Filter item -->
     <div>
         <h5 class="mb-4 text-sm 2xl:text-md font-bold">Цена</h5>

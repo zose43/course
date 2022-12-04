@@ -22,7 +22,7 @@
                 @include('shared.menu')
 
             </div><!-- /.header-menu -->
-            @include('main.shared.user-cabinet')
+            @include('shared.user-cabinet')
         </div><!-- /.header-inner -->
     </div><!-- /.container -->
 </header>

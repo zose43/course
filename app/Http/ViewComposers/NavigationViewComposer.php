@@ -13,7 +13,7 @@ class NavigationViewComposer
         // TODO isActive in view menu
         $menu = Menu::make()
             ->add(MenuItem::make('Главная', route('home')))
-            ->add(MenuItem::make('Каталог', '#'));
+            ->add(MenuItem::make('Каталог', route('catalog')));
 
         /** menu is a variable in view */
         $view->with('menu', $menu);

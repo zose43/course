@@ -100,4 +100,18 @@ class SignInControllerTest extends BaseAuthController
 
         $response->assertRedirect(route('home'));
     }
+
+    /**
+     * @test
+     */
+    public function is_authenticated_user_redirected(): void
+    {
+        $password = '12345678';
+        $user = $this->createUser($password);
+
+        $response = $this->actingAs($user)
+            ->get(action([SignInController::class, 'page']));
+
+        $response->assertRedirect(route('home'));
+    }
 }

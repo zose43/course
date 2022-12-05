@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Domain\Auth\Http\Controllers;
 
+use Domain\Auth\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -82,5 +83,20 @@ class ForgotControllerTest extends BaseAuthController
         $response = $this->post(action([ForgotPasswordController::class, 'handle']), $this->request);
 
         $response->assertSessionHas('course_flash_msg', 'We have emailed your password reset link!');
+    }
+
+    /**
+     * @test
+     */
+    public function is_authenticated_user_redirected(): void
+    {
+        $user = User::query()
+            ->where('email', self::EMAIL)
+            ->first();
+
+        $response = $this->actingAs($user)
+            ->get(action([ForgotPasswordController::class, 'page']));
+
+        $response->assertRedirect(route('home'));
     }
 }

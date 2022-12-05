@@ -8,17 +8,19 @@ use Domain\Catalog\Models\Category;
 
 class CatalogController extends Controller
 {
-    // TODO cache and select needed query items
     public function __invoke(?Category $category)
     {
         $products = Product::query()
+            ->select(['thumbnail', 'title', 'price'])
             ->paginate(6);
 
         $brands = Brand::query()
+            ->select(['title', 'id'])
             ->has('products')
             ->get();
 
         $categories = Category::query()
+            ->select(['title', 'slug'])
             ->has('products')
             ->get();
 

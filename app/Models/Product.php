@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Support\Casts\PriceCast;
+use Support\ValueObjects\Price;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Support\Traits\Models\GenerateSlug;
@@ -55,5 +56,33 @@ class Product extends Model
     public function scopeHomePage(Builder $query): Builder
     {
         return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
+    }
+
+    public function scopeFiltered(Builder $query): Builder
+    {
+        // TODO  fx prices
+
+        return $query->when(request('filters.brands'), function (Builder $q) {
+            $q->whereIn('brand_id', request('filters.brands'));
+        })->when(request('filters.price'), function (Builder $q) {
+            $q->whereBetween('price', [
+                Price::make(request()?->str('filters.price.from')->toInteger())
+                    ->getValue(),
+                Price::make(request()?->str('filters.price.to')->toInteger())
+                    ->getValue(),
+            ]);
+        });
+    }
+
+    public function scopeSorted(Builder $query): Builder
+    {
+        return $query->when(request('sort'), function (Builder $q) {
+            $column = request()?->str('sort');
+
+            if ($column->contains(['price', 'title'])) {
+                $direction = $column->contains('-') ? 'DESC' : 'ASC';
+                $q->orderBy((string)$column->remove('-'), $direction);
+            }
+        });
     }
 }

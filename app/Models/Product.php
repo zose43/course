@@ -30,6 +30,7 @@ class Product extends Model
         'repeat_count',
         'on_main_page',
         'sorting',
+        'text',
     ];
 
     protected $casts = [

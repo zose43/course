@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Support\Casts\PriceCast;
-use Support\ValueObjects\Price;
 use Domain\Catalog\Models\Brand;
+use Illuminate\Pipeline\Pipeline;
 use Domain\Catalog\Models\Category;
 use Support\Traits\Models\GenerateSlug;
 use Support\Traits\Models\HasThumbnail;
@@ -59,20 +59,12 @@ class Product extends Model
         return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
     }
 
-    public function scopeFiltered(Builder $query): Builder
+    public function scopeFiltered(Builder $query): void
     {
-        // TODO  fx prices
-
-        return $query->when(request('filters.brands'), function (Builder $q) {
-            $q->whereIn('brand_id', request('filters.brands'));
-        })->when(request('filters.price'), function (Builder $q) {
-            $q->whereBetween('price', [
-                Price::make(request()?->str('filters.price.from')->toInteger())
-                    ->getValue(),
-                Price::make(request()?->str('filters.price.to')->toInteger())
-                    ->getValue(),
-            ]);
-        });
+        app(Pipeline::class)
+            ->send($query)
+            ->through(filters())
+            ->thenReturn();
     }
 
     public function scopeSorted(Builder $query): Builder

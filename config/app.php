@@ -178,6 +178,7 @@ return [
         App\Providers\ViewServiceProvider::class,
         App\Providers\TestServiceProvider::class,
         App\Providers\DomainServiceProvider::class,
+        App\Providers\CatalogServiceProvider::class,
     ],
 
     /*

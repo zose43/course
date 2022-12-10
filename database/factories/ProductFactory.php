@@ -24,7 +24,7 @@ class ProductFactory extends Factory
                 Paths::FIXTURE_PATH . '/images' . Paths::ProductImages->value,
                 Paths::ProductImages->value
             ),
-            'price' => $this->faker->numberBetween(500, 100000),
+            'price' => $this->faker->numberBetween(convertPrice(500), convertPrice(90000)),
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

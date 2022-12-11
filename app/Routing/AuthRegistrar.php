@@ -26,6 +26,9 @@ class AuthRegistrar implements RouteRegistrar
                     ->name('login');
                 Route::post('/login', 'handle')
                     ->name('login.handle');
+                Route::delete('/logout', 'logOut')
+                    ->name('log-out')
+                    ->withoutMiddleware('guest');
             });
 
             Route::controller(SignUpController::class)->group(function () {
@@ -56,9 +59,5 @@ class AuthRegistrar implements RouteRegistrar
                     ->name('socialite.callback');
             });
         });
-
-        Route::delete('/logout', [SignInController::class, 'logOut'])
-            ->middleware('web')
-            ->name('log-out');
     }
 }

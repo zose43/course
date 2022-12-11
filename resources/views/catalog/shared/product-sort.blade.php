@@ -22,15 +22,14 @@
         </div>
     </div>
     <div x-data="{}" class="flex flex-col sm:flex-row sm:items-center gap-3">
-        <span class="text-body text-xxs sm:text-xs">Сортировать по</span>
+        <span class="text-body text-xxs sm:text-xs">{{ $sort->title() }}</span>
         <form x-ref="sortForm" action="{{ route('catalog',$category) }}">
-            <select name="sort"
+            <select name="{{ $sort->name() }}"
                     x-on:change="$refs.sortForm.submit()"
                     class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xxs sm:text-xs shadow-transparent outline-0 transition">
-                <option value="" class="text-dark">умолчанию</option>
-                <option @selected(request('sort') === 'price') value="price" class="text-dark">от дешевых к дорогим</option>
-                <option @selected(request('sort' ) === '-price') value="-price" class="text-dark">от дорогих к дешевым</option>
-                <option @selected(request('sort') === 'title') value="title" class="text-dark">наименованию</option>
+
+                @each('catalog.shared.sort-option',$sort->all(), 'item')
+
             </select>
         </form>
     </div>

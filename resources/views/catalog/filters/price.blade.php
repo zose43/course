@@ -5,6 +5,9 @@
         <span class="text-body text-xxs font-medium">До, ₽</span>
     </div>
     <div class="flex items-center gap-3">
+        <input type="hidden"
+               name="sort"
+               value="{{ request('sort') }}">
         <input id="{{ $filter->id('from') }}"
                type="number"
                name="{{ $filter->name('from') }}"

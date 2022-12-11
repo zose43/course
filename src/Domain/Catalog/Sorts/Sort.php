@@ -4,16 +4,23 @@ namespace Domain\Catalog\Sorts;
 
 use Support\Traits\DTOs\Makeable;
 use Illuminate\Support\Collection;
+use Domain\Catalog\Models\Category;
 
 class Sort
 {
     use Makeable;
 
     protected array $items = [];
+    protected Category $category;
 
     public function all(): Collection
     {
         return collect($this->items);
+    }
+
+    public function category(): Category
+    {
+        return $this->category;
     }
 
     public function add(Sort $item): self
@@ -45,5 +52,12 @@ class Sort
     public function isSelected(): bool
     {
         return request($this->name()) === $this->key;
+    }
+
+    public function route(): string
+    {
+        return catalogUrl($this->category(), [
+            $this->name() => $this->key(),
+        ]);
     }
 }

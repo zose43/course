@@ -12,7 +12,10 @@ class DomainServiceProvider extends ServiceProvider
     {
         $this->app->register(
             AuthServiceProvider::class,
-            CatalogServiceProvider::class
+        );
+
+        $this->app->register(
+            CatalogServiceProvider::class,
         );
     }
 }

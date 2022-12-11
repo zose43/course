@@ -13,11 +13,12 @@ class SortViewComposer
 {
     public function compose(View $view): void
     {
+        $category = $view->getData()['category'];
         $sort = Sort::make()
-            ->add(new SortDefault(label: 'умолчанию'))
-            ->add(new SortPriceAscent('price', 'от дешевых к дорогим'))
-            ->add(new SortPriceDescent('-price', 'от дорогих к дешевым'))
-            ->add(new SortAlphabet('title', 'наименованию'));
+            ->add(new SortDefault($category, label: 'умолчанию'))
+            ->add(new SortPriceAscent('price', 'от дешевых к дорогим', $category))
+            ->add(new SortPriceDescent('-price', 'от дорогих к дешевым', $category))
+            ->add(new SortAlphabet('title', 'наименованию', $category));
 
         $view->with('sort', $sort);
     }

@@ -2,9 +2,14 @@
 
 namespace Domain\Catalog\Sorts;
 
+use Domain\Catalog\Models\Category;
+
 class SortPriceAscent extends Sort
 {
-    public function __construct(protected string $key, protected string $label) {}
+    public function __construct(protected string $key, protected string $label, Category $category)
+    {
+        $this->category = $category;
+    }
 
     public function key(): string
     {

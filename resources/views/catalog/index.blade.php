@@ -36,8 +36,14 @@
                 @include('catalog.shared.product-sort')
 
                 <!-- Products list -->
-                <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
-                    @each('catalog.shared.product',$products, 'item')
+                <div class="products grid @if(productView('line')) 'grid-cols-1 gap-y-8 gap-x-6' @else 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12' @endif">
+
+                    @if(productView('block'))
+                        @each('catalog.shared.product',$products, 'item')
+                    @else
+                        @each('catalog.shared.inline-product',$products, 'item')
+                    @endif
+                    
                 </div>
 
                 <!-- Page pagination -->

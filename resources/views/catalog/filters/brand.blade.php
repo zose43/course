@@ -3,9 +3,6 @@
     @foreach($filter->values() as $id=> $label)
         <div class="form-checkbox">
             {{--     //todo sort       --}}
-            <input type="hidden"
-                   name="sort"
-                   value="{{ request('sort') }}">
             <input name="{{ $filter->name($id) }}"
                    type="checkbox"
                    value="{{ $id }}"

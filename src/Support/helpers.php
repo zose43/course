@@ -1,7 +1,9 @@
 <?php
 
 use Support\Flash\Flash;
+use App\Breadcrumbs\BreadCrumb;
 use Domain\Catalog\Models\Category;
+use App\Breadcrumbs\BreadCrumbItem;
 use Domain\Catalog\Filters\FilterManager;
 
 if (!function_exists('flash')) {
@@ -39,6 +41,20 @@ if (!function_exists('convertPrice')) {
                 ...$params,
                 'category' => $category,
             ]);
+        }
+    }
+
+    if (!function_exists('breadcrumbs')) {
+        function breadcrumbs(string $label, string $route): BreadCrumb
+        {
+            // TODO fx breadcrumbs
+            return BreadCrumb::make()
+                ->add(BreadCrumbItem::make('Главная', route('home')))
+                ->add(BreadCrumbItem::make('Каталог', route('catalog')))
+                ->addIf(str(request()?->path())->contains('catalog'),
+                    BreadCrumbItem::make($label, $route))
+                ->addIf(str(request()?->path())->contains('product'),
+                    BreadCrumbItem::make($label, $route));
         }
     }
 }

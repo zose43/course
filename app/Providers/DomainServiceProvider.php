@@ -5,17 +5,21 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Domain\Auth\Providers\AuthServiceProvider;
 use Domain\Catalog\Providers\CatalogServiceProvider;
+use Domain\Product\Providers\ProductServiceProvider;
 
 class DomainServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->register(
-            AuthServiceProvider::class,
-        );
+        array_map(fn(string $v) => $this->app->register($v), $this->provides());
+    }
 
-        $this->app->register(
+    public function provides(): array
+    {
+        return [
+            AuthServiceProvider::class,
             CatalogServiceProvider::class,
-        );
+            ProductServiceProvider::class,
+        ];
     }
 }

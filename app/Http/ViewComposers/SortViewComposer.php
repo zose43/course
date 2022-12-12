@@ -13,6 +13,7 @@ class SortViewComposer
 {
     public function compose(View $view): void
     {
+        //TODO fx category
         $category = $view->getData()['category'];
         $sort = Sort::make()
             ->add(new SortDefault($category, label: 'умолчанию'))

@@ -4,9 +4,10 @@
 
 @section('content')
     <!-- Breadcrumbs -->
-    <ul class="breadcrumbs flex flex-wrap gap-y-1 gap-x-4 mb-6">
-        @each('catalog.shared.breadcrumb', $breadcrumbs, 'item')
-    </ul>
+    @include('catalog.breadcrumbs.breadcrumb',['breadcrumbs' => breadcrumbs(
+    $category->title ?? '',
+    route('catalog', $category)
+    )])
 
     <section>
         <!-- Section heading -->
@@ -43,7 +44,7 @@
                     @else
                         @each('catalog.shared.inline-product',$products, 'item')
                     @endif
-                    
+
                 </div>
 
                 <!-- Page pagination -->

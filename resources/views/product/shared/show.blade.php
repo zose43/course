@@ -57,12 +57,10 @@
                     <div class="text-pink text-lg md:text-xl font-black">43 900 ₽</div>
                     <div class="text-body text-md md:text-lg font-bold line-through">59 300 ₽</div>
                 </div>
+
+                {{-- Attributes --}}
                 <ul class="sm:max-w-[360px] space-y-2 mt-8">
-                    <li class="flex justify-between text-body"><strong class="text-white">Вес (г):</strong> 92</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Тип сенсора:</strong> Оптический</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">DPI мыши:</strong> 18000</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Количество кнопок мыши:</strong> 8</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Подсветка:</strong> RGB</li>
+                    @each('product.shared.attribute', $product->properties, 'item')
                 </ul>
 
                 <!-- Add to cart -->

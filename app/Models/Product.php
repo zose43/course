@@ -6,6 +6,7 @@ use Support\Casts\PriceCast;
 use Domain\Catalog\Models\Brand;
 use Illuminate\Pipeline\Pipeline;
 use Domain\Catalog\Models\Category;
+use App\Jobs\ProductJsonPropertiesJob;
 use Support\Traits\Models\GenerateSlug;
 use Support\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
@@ -31,10 +32,12 @@ class Product extends Model
         'on_main_page',
         'sorting',
         'text',
+        'json_properties',
     ];
 
     protected $casts = [
         'price' => PriceCast::class,
+        'json_properties' => 'array',
     ];
 
     protected $hidden = ['repeat_count'];
@@ -42,6 +45,16 @@ class Product extends Model
     protected static function slugAttributeName(): string
     {
         return 'title';
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::created(static function (Product $product) {
+            dispatch(new ProductJsonPropertiesJob($product))
+                ->delay(now()->addSeconds(10));
+        });
     }
 
     public function brand(): BelongsTo

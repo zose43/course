@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class ProductController extends Controller
 {
     public function __invoke(Product $product)
     {
         if (session()->has('also')) {
+            $items = array_slice(session('also'), -5);
             $lastView = Product::query()
                 ->select(['thumbnail', 'title', 'price', 'slug'])
-                ->whereIn('id', session('also'))
+                ->where(function (Builder $q) use (&$product, $items) {
+                    $q->whereIn('id', $items)
+                        ->whereNot('id', $product->id);
+                })
                 ->limit(4)
                 ->get();
         }

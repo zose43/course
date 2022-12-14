@@ -14,13 +14,14 @@
 
         <div class="basis-full lg:basis-2/5 xl:basis-2/4">
             <div class="overflow-hidden h-auto max-h-[620px] lg:h-[480px] xl:h-[620px] rounded-3xl">
-                <img alt="SteelSeries Aerox 3 Snow" class="object-cover w-full h-full" src="../../../images/products/1.jpg">
+                <img alt="{{ $product->title }}" class="object-cover w-full h-full"
+                     src="{{ $product->thumbnail }}">
             </div>
         </div>
 
         <div class="basis-full lg:basis-3/5 xl:basis-2/4">
             <div class="grow flex flex-col lg:py-8">
-                <h1 class="text-lg md:text-xl xl:text-[42px] font-black">SteelSeries Aerox 3 Snow</h1>
+                <h1 class="text-lg md:text-xl xl:text-[42px] font-black">{{ $product->title }}</h1>
                 <ul class="flex items-center gap-2 mt-4">
                     <li class="text-[#FFC107]">
                         <svg class="w-4 md:w-6 h-4 md:h-6" fill="currentColor" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
@@ -54,39 +55,38 @@
                     </li>
                 </ul>
                 <div class="flex items-baseline gap-4 mt-4">
-                    <div class="text-pink text-lg md:text-xl font-black">43 900 ₽</div>
+                    <div class="text-pink text-lg md:text-xl font-black">{{ $product->price }}</div>
                     <div class="text-body text-md md:text-lg font-bold line-through">59 300 ₽</div>
                 </div>
+
+                {{-- Attributes --}}
                 <ul class="sm:max-w-[360px] space-y-2 mt-8">
-                    <li class="flex justify-between text-body"><strong class="text-white">Вес (г):</strong> 92</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Тип сенсора:</strong> Оптический</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">DPI мыши:</strong> 18000</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Количество кнопок мыши:</strong> 8</li>
-                    <li class="flex justify-between text-body"><strong class="text-white">Подсветка:</strong> RGB</li>
+                    @each('product.shared.attribute', $product->properties, 'item')
                 </ul>
 
                 <!-- Add to cart -->
                 <form class="space-y-8 mt-8">
+                    {{-- Options --}}
+
                     <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
-                        <div class="flex flex-col gap-2">
-                            <label class="cursor-pointer text-body text-xxs font-medium" for="filter-item-1">Цвет</label>
-                            <select class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                    id="filter-item-1">
-                                <option class="text-dark" value="Белый">Белый</option>
-                                <option class="text-dark" value="Чёрный">Чёрный</option>
-                                <option class="text-dark" value="Синий">Синий</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="cursor-pointer text-body text-xxs font-medium" for="filter-item-2">Размер (хват)</label>
-                            <select class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                    id="filter-item-2">
-                                <option class="text-dark" value="Маленький">Маленький</option>
-                                <option class="text-dark" value="Средний">Средний</option>
-                                <option class="text-dark" value="Большой">Большой</option>
-                            </select>
-                        </div>
+                        @foreach($options as $option => $values)
+                            <div class="flex flex-col gap-2">
+                                <label class="cursor-pointer text-body text-xxs font-medium" for="filter-item-1">
+                                    {{ $option }}
+                                </label>
+                                <select class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
+                                        id="filter-item-1">
+                                    @foreach($values as $value)
+                                        <option class="text-dark" value="{{ $value->option_id }}">
+                                            {{ $value->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endforeach
                     </div>
+
+
                     <div class="flex flex-wrap items-center gap-3 xs:gap-4">
                         <div class="flex items-stretch h-[54px] lg:h-[72px] gap-2">
                             <button class="w-12 h-full rounded-lg border border-body/10 hover:bg-card/20 active:bg-card/50 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs text-center font-bold shadow-transparent outline-0 transition"
@@ -121,7 +121,13 @@
     </section>
 
     <!-- Watched products  -->
-    <section class="mt-16 xl:mt-24">
-        @include('product.shared.watched-products')
-    </section>
+    @if($lastView->isNotEmpty())
+        <section class="mt-16 xl:mt-24">
+            <h2 class="mb-12 text-lg lg:text-[42px] font-black">Просмотренные товары</h2>
+            <!-- Products list -->
+            <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
+                @each('catalog.shared.product', $lastView, 'item')
+            </div>
+        </section>
+    @endif
 @endsection

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Domain\Catalog\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Domain\Catalog\ViewModels\CategoryViewModel;

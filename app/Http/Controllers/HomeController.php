@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Illuminate\View\View;
 use Domain\Catalog\ViewModels\BrandViewModel;
 use Domain\Catalog\ViewModels\CategoryViewModel;

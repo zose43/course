@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Database\Factories\BrandFactory;
 use Database\Factories\OptionFactory;
+use Database\Factories\ProductFactory;
 use Database\Factories\CategoryFactory;
 use Database\Factories\PropertyFactory;
 use Database\Factories\OptionValueFactory;
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         CategoryFactory::new()
             ->count(20)
             ->has(
-                Product::factory(random_int(5, 15))
+                ProductFactory::new()->count(random_int(5, 15))
                     ->hasAttached($properties, fn() => ['value' => fake()->word()])
                     ->hasAttached($optionValues)
             )->create();

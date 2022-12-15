@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class ProductController extends Controller

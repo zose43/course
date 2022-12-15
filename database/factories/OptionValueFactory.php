@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Option;
-use App\Models\OptionValue;
+use Domain\Product\Models\Option;
+use Domain\Product\Models\OptionValue;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

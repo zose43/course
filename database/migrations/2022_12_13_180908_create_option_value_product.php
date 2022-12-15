@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Product;
-use App\Models\OptionValue;
+use Domain\Product\Models\Product;
+use Domain\Product\Models\OptionValue;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;

@@ -3,7 +3,7 @@
 namespace Tests\Feature\Domain\Product\Http\Controllers;
 
 use Tests\TestCase;
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Database\Factories\ProductFactory;
 use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Testing\RefreshDatabase;

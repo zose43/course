@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Support\enums\Paths;
 use Illuminate\Support\Carbon;
 use Domain\Catalog\Models\Brand;

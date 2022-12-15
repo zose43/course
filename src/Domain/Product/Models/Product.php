@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Domain\Product\Models;
 
 use Support\Casts\PriceCast;
 use Domain\Catalog\Models\Brand;

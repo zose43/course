@@ -19,6 +19,7 @@ class ProductJsonPropertiesJob implements ShouldQueue, ShouldBeUnique
 
     public function __construct(public Product $product) {}
 
+//todo fix uniq with repeated elements (relation has many)
     public function handle(): void
     {
         $properties = $this->product->properties

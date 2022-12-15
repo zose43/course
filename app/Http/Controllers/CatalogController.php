@@ -12,7 +12,7 @@ class CatalogController extends Controller
     public function __invoke(?Category $category)
     {
         $products = Product::query()
-            ->select(['thumbnail', 'title', 'price', 'slug'])
+            ->select(['thumbnail', 'title', 'price', 'slug', 'json_properties'])
             ->when(request('s'), function (Builder $query) {
                 $query->whereFullText(['title', 'text'], request('s'));
             })->when($category?->exists, function (Builder $query) use (&$category) {

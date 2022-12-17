@@ -4,7 +4,7 @@ namespace Tests\Feature\App\Http\Controllers;
 
 use Storage;
 use Tests\TestCase;
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Domain\Catalog\Models\Brand;
 use Database\Factories\BrandFactory;
 use Database\Factories\ProductFactory;

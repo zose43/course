@@ -5,9 +5,15 @@
         <span class="text-body text-xxs font-medium">До, ₽</span>
     </div>
     <div class="flex items-center gap-3">
-        <input type="hidden"
-               name="sort"
-               value="{{ request('sort') }}">
+        <x-catalog.filters.hidden-input
+                name="sort"
+                value="sort">
+        </x-catalog.filters.hidden-input>
+        <x-catalog.filters.hidden-input
+                name="s"
+                value="s">
+        </x-catalog.filters.hidden-input>
+        
         <input id="{{ $filter->id('from') }}"
                type="number"
                name="{{ $filter->name('from') }}"

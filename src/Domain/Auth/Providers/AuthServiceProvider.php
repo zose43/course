@@ -8,7 +8,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 class AuthServiceProvider extends ServiceProvider
 {
     protected array $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        // 'Domain\Product\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     public function boot(): void

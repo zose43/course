@@ -20,11 +20,9 @@ abstract class BaseFilter
     abstract public function view(): string;
 
     /** @info for correct work Pipeline::class */
-    public function __invoke(Builder $query, callable $next): void
+    public function __invoke(Builder $query, callable $next): Builder
     {
-        $this->apply($query);
-
-        $next($query);
+        return $next($this->apply($query));
     }
 
     public function requestValue(string $index = null, mixed $default = null): mixed

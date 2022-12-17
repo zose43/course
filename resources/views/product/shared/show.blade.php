@@ -68,23 +68,25 @@
                 <form class="space-y-8 mt-8">
                     {{-- Options --}}
 
-                    <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
-                        @foreach($options as $option => $values)
-                            <div class="flex flex-col gap-2">
-                                <label class="cursor-pointer text-body text-xxs font-medium" for="filter-item-1">
-                                    {{ $option }}
-                                </label>
-                                <select class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                        id="filter-item-1">
-                                    @foreach($values as $value)
-                                        <option class="text-dark" value="{{ $value->option_id }}">
-                                            {{ $value->title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endforeach
-                    </div>
+                    @if(!empty($options))
+                        <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
+                            @foreach($options as $option => $values)
+                                <div class="flex flex-col gap-2">
+                                    <label class="cursor-pointer text-body text-xxs font-medium" for="filter-item-1">
+                                        {{ $option }}
+                                    </label>
+                                    <select class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
+                                            id="filter-item-1">
+                                        @foreach($values as $value)
+                                            <option class="text-dark" value="{{ $value->option_id }}">
+                                                {{ $value->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
 
 
                     <div class="flex flex-wrap items-center gap-3 xs:gap-4">

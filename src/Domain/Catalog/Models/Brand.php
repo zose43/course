@@ -2,7 +2,7 @@
 
 namespace Domain\Catalog\Models;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Support\Traits\Models\GenerateSlug;
 use Support\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;

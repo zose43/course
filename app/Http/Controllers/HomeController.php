@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\View\View;
 use Domain\Catalog\ViewModels\BrandViewModel;
+use Domain\Product\ViewModels\ProductViewModel;
 use Domain\Catalog\ViewModels\CategoryViewModel;
 
 class HomeController extends Controller
@@ -17,10 +17,12 @@ class HomeController extends Controller
         $categories = CategoryViewModel::make()
             ->homePage();
 
-        $products = Product::query()
-            ->homePage()
-            ->get();
+        $products = ProductViewModel::make()
+            ->homePage();
 
-        return view('index', compact('products', 'categories', 'brands'));
+        return view('index', compact(
+            'products',
+            'categories',
+            'brands'));
     }
 }

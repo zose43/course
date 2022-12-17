@@ -29,9 +29,7 @@ class ProductViewModel
     {
         $this->product->load('optionValues.option');
 
-        return $this->product->optionValues->mapToGroups(function ($item) {
-            return [$item->option->title => $item];
-        });
+        return $this->product->optionValues->keyValue();
     }
 
     public function homePage(): Collection|array

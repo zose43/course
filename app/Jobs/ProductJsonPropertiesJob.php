@@ -22,8 +22,9 @@ class ProductJsonPropertiesJob implements ShouldQueue, ShouldBeUnique
 //todo fix uniq with repeated elements (relation has many)
     public function handle(): void
     {
-        $properties = $this->product->properties
-            ->mapWithKeys(fn($p) => [$p->title => $p->pivot->value]);
+        $properties = $this->product
+            ->properties
+            ->withTitle();
         $this->product->updateQuietly(['json_properties' => $properties]);
     }
 

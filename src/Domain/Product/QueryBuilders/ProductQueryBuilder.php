@@ -26,7 +26,7 @@ class ProductQueryBuilder extends Builder
         return app(Pipeline::class)
             ->send($this)
             ->through(filters())
-            ->thenReturn() ?? $this;
+            ->thenReturn();
     }
 
     public function catalog(?Category $category): self

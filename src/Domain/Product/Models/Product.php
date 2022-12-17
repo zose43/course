@@ -4,7 +4,6 @@ namespace Domain\Product\Models;
 
 use Support\Casts\PriceCast;
 use Domain\Catalog\Models\Brand;
-use Illuminate\Pipeline\Pipeline;
 use Domain\Catalog\Models\Category;
 use App\Jobs\ProductJsonPropertiesJob;
 use Support\Traits\Models\GenerateSlug;
@@ -12,9 +11,13 @@ use Support\Traits\Models\HasThumbnail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Domain\Product\QueryBuilders\ProductQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static Product|ProductQueryBuilder query()
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -67,31 +70,6 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function scopeHomePage(Builder $query): Builder
-    {
-        return $query->where('on_main_page', true)->orderBy('sorting')->limit(6);
-    }
-
-    public function scopeFiltered(Builder $query): void
-    {
-        app(Pipeline::class)
-            ->send($query)
-            ->through(filters())
-            ->thenReturn();
-    }
-
-    public function scopeSorted(Builder $query): Builder
-    {
-        return $query->when(request('sort'), function (Builder $q) {
-            $column = request()?->str('sort');
-
-            if ($column->contains(['price', 'title'])) {
-                $direction = $column->contains('-') ? 'DESC' : 'ASC';
-                $q->orderBy((string)$column->remove('-'), $direction);
-            }
-        });
-    }
-
     public function properties(): BelongsToMany
     {
         return $this->belongsToMany(Property::class)
@@ -101,5 +79,10 @@ class Product extends Model
     public function optionValues(): BelongsToMany
     {
         return $this->belongsToMany(OptionValue::class);
+    }
+
+    public function newEloquentBuilder($query): Builder
+    {
+        return new ProductQueryBuilder($query);
     }
 }

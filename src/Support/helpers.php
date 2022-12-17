@@ -37,7 +37,7 @@ if (!function_exists('convertPrice')) {
         function catalogUrl(Category $category, array $params = []): string
         {
             return route('catalog', [
-                ...request()?->only(['filters', 'sort']),
+                ...request()?->only(['filters', 'sort', 's']),
                 ...$params,
                 'category' => $category,
             ]);

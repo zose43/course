@@ -21,7 +21,7 @@
 
         <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mt-6">
             <div class="flex items-baseline gap-4">
-                <div class="text-pink text-md xl:text-lg font-black">30 000 ₽</div>
+                <div class="text-pink text-md xl:text-lg font-black">{{ $item->price }}</div>
                 <div class="text-body text-sm xl:text-md font-semibold line-through">59 300 ₽</div>
             </div>
 

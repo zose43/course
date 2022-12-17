@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use Domain\Product\Models\Product;
 use Illuminate\Bus\Queueable;
+use Domain\Product\Models\Product;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

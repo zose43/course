@@ -29,17 +29,23 @@ class ProductQueryBuilder extends Builder
             ->thenReturn();
     }
 
-    public function catalog(?Category $category): self
+    public function withCategory(?Category $category): self
+    {
+        // todo fx domain dependency
+        return $this->when($category?->exists, function (Builder $query) use (&$category) {
+            $query->whereRelation(
+                'categories',
+                'categories.id',
+                '=',
+                $category->id);
+        });
+    }
+
+    public function search(): self
     {
         return $this->select(['thumbnail', 'title', 'price', 'slug', 'json_properties'])
             ->when(request('s'), function (Builder $query) {
                 $query->whereFullText(['title', 'text'], request('s'));
-            })->when($category?->exists, function (Builder $query) use (&$category) {
-                $query->whereRelation(
-                    'categories',
-                    'categories.id',
-                    '=',
-                    $category->id);
             });
     }
 

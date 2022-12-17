@@ -11,7 +11,8 @@ class CatalogController extends Controller
     public function __invoke(?Category $category)
     {
         $products = Product::query()
-            ->catalog($category)
+            ->withCategory($category)
+            ->search()
             ->filtered()
             ->sorted()
             ->paginate(6);

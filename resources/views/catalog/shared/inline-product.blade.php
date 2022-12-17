@@ -10,14 +10,15 @@
             </a>
         </h3>
 
-        <ul class="space-y-1 mt-4 text-xxs">
-            @foreach($item->json_properties as $option => $value)
-                <li class="flex justify-between text-body">
-                    <strong>{{ $option }}:</strong> {{ $value }}
-                </li>
-            @endforeach
-
-        </ul>
+        @if(!empty($item->json_properties))
+            <ul class="space-y-1 mt-4 text-xxs">
+                @foreach($item->json_properties as $option => $value)
+                    <li class="flex justify-between text-body">
+                        <strong>{{ $option }}:</strong> {{ $value }}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mt-6">
             <div class="flex items-baseline gap-4">

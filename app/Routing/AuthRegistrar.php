@@ -2,7 +2,7 @@
 
 namespace App\Routing;
 
-use App\contracts\RouteRegistrar;
+use App\Contracts\RouteRegistrar;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Routing\Registrar;
 use App\Http\Controllers\Auth\SignInController;

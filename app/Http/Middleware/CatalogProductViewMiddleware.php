@@ -9,8 +9,9 @@ class CatalogProductViewMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+        session()->put('product_view', session()->get('product_view', 'block'));
         if ($request->has('product_view')) {
-            session()->put('product_view', $request->get('product_view', 'block'));
+            session()->put('product_view', $request->get('product_view'));
         }
 
         return $next($request);

@@ -6,6 +6,7 @@ use RuntimeException;
 use Illuminate\Http\Request;
 use App\Routing\AppRegistrar;
 use App\Routing\AuthRegistrar;
+use App\Routing\CartRegistrar;
 use App\Contracts\RouteRegistrar;
 use App\Routing\CatalogRegistrar;
 use App\Routing\ProductRegistrar;
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     protected array $registrars = [
+        CartRegistrar::class,
         AppRegistrar::Class,
         AuthRegistrar::class,
         CatalogRegistrar::class,

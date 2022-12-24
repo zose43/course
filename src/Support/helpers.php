@@ -1,6 +1,7 @@
 <?php
 
 use Support\Flash\Flash;
+use Domain\Cart\CartManager;
 use App\Breadcrumbs\BreadCrumb;
 use Domain\Catalog\Models\Category;
 use App\Breadcrumbs\BreadCrumbItem;
@@ -55,6 +56,13 @@ if (!function_exists('convertPrice')) {
                     BreadCrumbItem::make($label, $route))
                 ->addIf(str(request()?->path())->contains('product'),
                     BreadCrumbItem::make($label, $route));
+        }
+    }
+
+    if (!function_exists('cart')) {
+        function cart(): CartManager
+        {
+            return app(CartManager::class);
         }
     }
 }

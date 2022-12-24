@@ -9,7 +9,7 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cart_item_potion_value', static function (Blueprint $table) {
+        Schema::create('cart_item_option_value', static function (Blueprint $table) {
             $table->id();
 
             $table->foreignIdFor(CartItem::class)
@@ -29,7 +29,7 @@ return new class extends Migration {
     public function down(): void
     {
         if (!app()->isProduction()) {
-            Schema::dropIfExists('cart_item_potion_value');
+            Schema::dropIfExists('cart_item_option_value');
         }
     }
 };

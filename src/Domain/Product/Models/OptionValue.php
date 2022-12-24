@@ -5,9 +5,9 @@ namespace Domain\Product\Models;
 use Domain\Cart\Models\CartItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Domain\Product\Collections\OptionValueCollection;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @see OptionValueCollection
@@ -29,8 +29,8 @@ class OptionValue extends Model
         return new OptionValueCollection($models);
     }
 
-    public function cartItems(): BelongsToMany
+    public function cartItems(): HasMany
     {
-        return $this->belongsToMany(CartItem::class);
+        return $this->hasMany(CartItem::class);
     }
 }

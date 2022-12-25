@@ -11,7 +11,9 @@ class CartController extends Controller
 {
     public function index(): View
     {
-        return view('cart.index');
+        return view('cart.index', [
+            'items' => cart()->items()
+        ]);
     }
 
     public function add(Product $product): RedirectResponse
@@ -29,6 +31,7 @@ class CartController extends Controller
     public function quantity(CartItem $item): RedirectResponse
     {
         flash()->info('Кол-во товара изменено');
+        cart()->quantity($item, request('quantity', 1));
 
         return redirect()->intended(route('cart.index'));
     }
@@ -36,6 +39,7 @@ class CartController extends Controller
     public function delete(CartItem $item): RedirectResponse
     {
         flash()->info('Удалено из корзины');
+        cart()->delete($item);
 
         return redirect()->intended(route('cart.index'));
     }
@@ -43,6 +47,7 @@ class CartController extends Controller
     public function truncate(): RedirectResponse
     {
         flash()->info('Корзина очищена');
+        cart()->truncate();
 
         return redirect()->intended(route('cart.index'));
     }

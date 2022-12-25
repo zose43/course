@@ -93,6 +93,18 @@ class CartManager
         return collect($this->get()?->cartItems);
     }
 
+    public function items(): Collection
+    {
+        $cart = $this->get();
+        if (!$cart) {
+            return collect([]);
+        }
+
+        return $cart->cartItems()
+            ->with(['product','optionValues.option'])
+            ->get();
+    }
+
     public function count(): int
     {
         return $this->cartItems()

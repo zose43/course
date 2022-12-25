@@ -93,6 +93,7 @@
 
 
                     <div class="flex flex-wrap items-center gap-3 xs:gap-4">
+                {{-- make quantity component                     --}}
                         <div class="flex items-stretch h-[54px] lg:h-[72px] gap-2">
                             <button class="w-12 h-full rounded-lg border border-body/10 hover:bg-card/20 active:bg-card/50 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs text-center font-bold shadow-transparent outline-0 transition"
                                     type="button">

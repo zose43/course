@@ -20,21 +20,35 @@ class CartManager
     {
         $cart = Cart::updateOrCreate([
             'storage_id' => $this->identityStorage->get(),
-        ], [
-            $this->storedData($this->identityStorage->get()),
-        ]);
+        ], $this->storedData($this->identityStorage->get()));
 
-        $cartItem = $cart->cartItems()->updateOrCreate([
-            'product_id' => $product->id,
-            'string_option_values' => $this->stringedOptionValues($optionValues),
-        ], [
-            'price' => $product->price,
-            'quantity' => DB::raw("quantity + $quantity"),
-            'string_option_values' => $this->stringedOptionValues($optionValues),
-        ]);
+        // todo updateOrCreate --> DB::raw("quantity + $quantity") throw error in insert case
+        $cartItem = $cart->cartItems()
+            ->where([
+                ['product_id', $product->id],
+                ['string_option_values', $this->stringedOptionValues($optionValues)],
+            ])->first();
+
+        if ($cartItem) {
+            $cartItem->update([
+                'price' => $product->price,
+                'quantity' => DB::raw("quantity + $quantity"),
+                'string_option_values' => $this->stringedOptionValues($optionValues),
+            ]);
+        } else {
+            $cartItem = CartItem::create([
+                'cart_id' => $cart->id,
+                'product_id' => $product->id,
+                'price' => $product->price,
+                'quantity' => $quantity,
+                'string_option_values' => $this->stringedOptionValues($optionValues),
+            ]);
+        }
 
         /** sync with product props */
-        $cartItem->optionValues()->sync($optionValues);
+        $cartItem->optionValues()
+            ->withTimestamps()
+            ->sync($optionValues);
 
         $this->forgetCache();
 
@@ -76,7 +90,7 @@ class CartManager
 
     public function cartItems(): Collection
     {
-        return collect($this->get()?->cartItems());
+        return collect($this->get()?->cartItems);
     }
 
     public function count(): int
@@ -89,7 +103,7 @@ class CartManager
     {
         return Price::make(
             $this->cartItems()
-                ->sum(fn(CartItem $item) => $item->amount())
+                ->sum(fn(CartItem $item) => $item->amount->getRaw())
         );
     }
 

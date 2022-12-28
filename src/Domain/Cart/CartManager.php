@@ -9,7 +9,7 @@ use Domain\Cart\Models\CartItem;
 use Domain\Product\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Domain\Cart\Contracts\CartIdentityStorageContract;
 
 class CartManager
@@ -101,7 +101,7 @@ class CartManager
         }
 
         return $cart->cartItems()
-            ->with(['product','optionValues.option'])
+            ->with(['product', 'optionValues.option'])
             ->get();
     }
 
@@ -146,5 +146,12 @@ class CartManager
         }
 
         return $data;
+    }
+
+    public function updateStorageId(string $old, string $current): void
+    {
+        Cart::query()
+            ->where('storage_id', $old)
+            ->update($this->storedData($current));
     }
 }

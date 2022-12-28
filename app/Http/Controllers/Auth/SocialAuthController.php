@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Throwable;
 use DomainException;
+use Support\SessionRegenerator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
@@ -31,7 +32,9 @@ class SocialAuthController extends Controller
 
         /** @var GithubCallbackAction $action */
         $user = $action($driver);
-        auth()->login($user);
+
+        SessionRegenerator::run(
+            static fn() => auth()->login($user));
 
         return redirect()->intended(route('home'));
     }

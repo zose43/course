@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
+use Support\SessionRegenerator;
 use Domain\Auth\DTOs\NewUserDTO;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +26,9 @@ class SignUpController extends Controller
         /** @var RegisterNewUserAction $action */
         $user = $action($newUserDTO);
         event(new Registered($user));
-        auth()->login($user);
+
+        SessionRegenerator::run(
+            static fn() => auth()->login($user));
 
         return redirect()->intended(route('home'));
     }

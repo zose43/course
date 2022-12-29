@@ -97,7 +97,11 @@ class CartManager
 
     public function cartItems(): Collection|EloquentCollection
     {
-        return $this->get()?->cartItems ?? collect();
+        if ($this->get()) {
+            return $this->get()->cartItems;
+        }
+
+        return collect();
     }
 
     public function items(): Collection

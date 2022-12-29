@@ -15,6 +15,15 @@ class CartControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private function createData(): array
+    {
+        $quantity = 2;
+        $product = ProductFactory::new()
+            ->create();
+
+        return [$quantity, $product];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,9 +49,7 @@ class CartControllerTest extends TestCase
      */
     public function is_not_empty_cart(): void
     {
-        $quantity = 2;
-        $product = ProductFactory::new()
-            ->create();
+        [$quantity, $product] = $this->createData();
         cart()->add($product, $quantity);
 
         $this->get(action([CartController::class, 'index']))
@@ -59,9 +66,7 @@ class CartControllerTest extends TestCase
      */
     public function is_added_successfully(): void
     {
-        $quantity = 2;
-        $product = ProductFactory::new()
-            ->create();
+        [$quantity, $product] = $this->createData();
 
         $this->assertEquals(0, cart()->count());
 
@@ -71,6 +76,8 @@ class CartControllerTest extends TestCase
                 'quantity' => $quantity,
             ])
             ->assertSessionHas('course_flash_msg', 'Товар добавлен в корзину');
+
+        $this->assertNotEmpty(cart()->cartItems());
     }
 
     /**
@@ -79,9 +86,7 @@ class CartControllerTest extends TestCase
      */
     public function is_quantity_changed(): void
     {
-        $quantity = 2;
-        $product = ProductFactory::new()
-            ->create();
+        [$quantity, $product] = $this->createData();
         cart()->add($product, $quantity);
 
         $this->assertEquals($quantity, cart()->count());
@@ -102,9 +107,7 @@ class CartControllerTest extends TestCase
      */
     public function is_delete_success(): void
     {
-        $quantity = 2;
-        $product = ProductFactory::new()
-            ->create();
+        [$quantity, $product] = $this->createData();
         cart()->add($product, $quantity);
 
         $this->assertEquals($quantity, cart()->count());
@@ -124,9 +127,9 @@ class CartControllerTest extends TestCase
     {
         $product = ProductFactory::new()
             ->create();
-        cart()->add($product,1);
+        cart()->add($product, 1);
 
-        $this->assertDatabaseCount('cart_items',1);
+        $this->assertDatabaseCount('cart_items', 1);
 
         $this->delete(
             action([CartController::class, 'truncate'], cart()->cartItems()->first()))

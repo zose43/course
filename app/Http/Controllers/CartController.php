@@ -12,7 +12,7 @@ class CartController extends Controller
     public function index(): View
     {
         return view('cart.index', [
-            'items' => cart()->items()
+            'items' => cart()->items(),
         ]);
     }
 

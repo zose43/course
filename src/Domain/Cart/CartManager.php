@@ -9,12 +9,19 @@ use Domain\Cart\Models\CartItem;
 use Domain\Product\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Domain\Cart\Contracts\CartIdentityStorageContract;
+use Domain\Cart\StorageIdentities\FakeIdentityStorage;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CartManager
 {
     public function __construct(protected CartIdentityStorageContract $identityStorage) {}
+
+    public static function fake(): void
+    {
+        app()->bind(CartIdentityStorageContract::class, FakeIdentityStorage::class);
+    }
 
     public function add(Product $product, int $quantity, array $optionValues = []): Cart
     {
@@ -88,9 +95,13 @@ class CartManager
         }) ?: null;
     }
 
-    public function cartItems(): Collection
+    public function cartItems(): Collection|EloquentCollection
     {
-        return collect($this->get()?->cartItems);
+        if ($this->get()) {
+            return $this->get()->cartItems;
+        }
+
+        return collect();
     }
 
     public function items(): Collection
@@ -101,7 +112,7 @@ class CartManager
         }
 
         return $cart->cartItems()
-            ->with(['product','optionValues.option'])
+            ->with(['product', 'optionValues.option'])
             ->get();
     }
 
@@ -146,5 +157,12 @@ class CartManager
         }
 
         return $data;
+    }
+
+    public function updateStorageId(string $old, string $current): void
+    {
+        Cart::query()
+            ->where('storage_id', $old)
+            ->update($this->storedData($current));
     }
 }

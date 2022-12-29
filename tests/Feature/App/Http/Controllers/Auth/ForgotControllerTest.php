@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Domain\Auth\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
-use Domain\Auth\Models\User;
-use Database\Factories\UserFactory;
-use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use Database\Factories\UserFactory;
+use Domain\Auth\Models\User;
+use Illuminate\Support\Facades\Password;
 
 /**
  * @coversDefaultClass ForgotPasswordController

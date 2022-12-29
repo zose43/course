@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Domain\Auth\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
-use App\Http\Requests\SignInFormRequest;
 use App\Http\Controllers\Auth\SignInController;
+use App\Http\Requests\SignInFormRequest;
 
 /**
  * @coversDefaultClass SignInController

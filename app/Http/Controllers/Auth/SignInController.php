@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
+use Support\SessionRegenerator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\SignInFormRequest;
@@ -21,16 +22,16 @@ class SignInController extends Controller
                 'email' => 'Неверно введены данные',
             ])->onlyInput('email');
         }
-        $request->session()->regenerate();
+
+        SessionRegenerator::run();
 
         return redirect()->intended(route('home'));
     }
 
     public function logOut(): RedirectResponse
     {
-        auth()->logout();
-        request()?->session()->invalidate();
-        request()?->session()->regenerateToken();
+        SessionRegenerator::run(
+            static fn() => auth()->logout());
 
         return redirect()->route('home');
     }

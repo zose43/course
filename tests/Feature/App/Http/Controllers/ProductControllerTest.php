@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Domain\Product\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers;
 
-use Tests\TestCase;
-use Domain\Product\Models\Product;
-use Database\Factories\ProductFactory;
 use App\Http\Controllers\ProductController;
+use Database\Factories\ProductFactory;
+use Domain\Product\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 /**
  * @coversDefaultClass ProductController

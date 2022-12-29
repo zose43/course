@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Domain\Auth\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
-use DomainException;
+use App\Http\Controllers\Auth\SocialAuthController;
 use Database\Factories\UserFactory;
+use DomainException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\Fixtures\Traits\GithubCallbackAction;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Http\Controllers\Auth\SocialAuthController;
 
 /**
  * @coversDefaultClass

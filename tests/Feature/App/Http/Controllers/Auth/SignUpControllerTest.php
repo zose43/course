@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature\Domain\Auth\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
-use Event;
-use Domain\Auth\Models\User;
-use Illuminate\Auth\Events\Registered;
-use App\Http\Requests\SignUpFormRequest;
-use App\Notifications\NewUserNotification;
-use App\Listeners\SendEmailNewUserListener;
-use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Requests\SignUpFormRequest;
+use App\Listeners\SendEmailNewUserListener;
+use App\Notifications\NewUserNotification;
+use Domain\Auth\Models\User;
+use Event;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * @coversDefaultClass SignUpController

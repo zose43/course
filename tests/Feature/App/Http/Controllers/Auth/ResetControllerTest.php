@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Domain\Auth\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\SignInController;
+use App\Http\Requests\ResetPasswordFormRequest;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Password;
-use App\Http\Requests\ResetPasswordFormRequest;
-use App\Http\Controllers\Auth\SignInController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 
 /**
  * @coversDefaultClass ResetPasswordController

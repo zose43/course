@@ -11,10 +11,17 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Domain\Cart\Contracts\CartIdentityStorageContract;
+use Domain\Cart\StorageIdentities\FakeIdentityStorage;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CartManager
 {
     public function __construct(protected CartIdentityStorageContract $identityStorage) {}
+
+    public static function fake(): void
+    {
+        app()->bind(CartIdentityStorageContract::class, FakeIdentityStorage::class);
+    }
 
     public function add(Product $product, int $quantity, array $optionValues = []): Cart
     {
@@ -88,9 +95,9 @@ class CartManager
         }) ?: null;
     }
 
-    public function cartItems(): Collection
+    public function cartItems(): Collection|EloquentCollection
     {
-        return collect($this->get()?->cartItems);
+        return $this->get()?->cartItems ?? collect();
     }
 
     public function items(): Collection

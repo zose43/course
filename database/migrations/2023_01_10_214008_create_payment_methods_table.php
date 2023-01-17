@@ -18,7 +18,7 @@ return new class extends Migration {
 
         DB::table('payment_methods')
             ->insert([
-                ['title' => 'Наличными'],
+                ['title' => 'Наличными', 'redirect_to_pay' => false],
                 ['title' => 'Онлайн', 'redirect_to_pay' => true],
             ]);
     }

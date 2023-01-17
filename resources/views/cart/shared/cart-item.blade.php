@@ -10,13 +10,7 @@
                         {{ $item->product->title }}
                     </a>
                 </h4>
-                @if($item->optionValues->isNotEmpty())
-                    <ul class="space-y-1 mt-2 text-xs">
-                        @foreach($item->optionValues as $value)
-                            <li class="text-body">{{$value->option->title . ': ' . $value->title }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+                <x-cart.option-value :values="$item->optionValues"></x-cart.option-value>
             </div>
         </div>
     </td>

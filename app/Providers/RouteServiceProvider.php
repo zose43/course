@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Routing\AppRegistrar;
 use App\Routing\AuthRegistrar;
 use App\Routing\CartRegistrar;
+use App\Routing\OrderRegistrar;
 use App\Contracts\RouteRegistrar;
 use App\Routing\CatalogRegistrar;
 use App\Routing\ProductRegistrar;
@@ -30,6 +31,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     protected array $registrars = [
+        OrderRegistrar::class,
         CartRegistrar::class,
         AppRegistrar::Class,
         AuthRegistrar::class,

@@ -2,6 +2,7 @@
 
 use Domain\Auth\Models\User;
 use Domain\Order\Models\DeliveryType;
+use Domain\Order\Enums\OrderStatuses;
 use Illuminate\Support\Facades\Schema;
 use Domain\Order\Models\PaymentMethod;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,6 +15,10 @@ return new class extends Migration {
             $table->id();
             $table->unsignedInteger('amount')
                 ->default(0);
+            $table->enum(
+                'status',
+                array_column(OrderStatuses::cases(), 'value'))
+                ->default('new');
 
             $table->foreignIdFor(User::class)
                 ->nullable()

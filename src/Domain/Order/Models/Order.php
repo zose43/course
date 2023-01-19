@@ -3,11 +3,18 @@
 namespace Domain\Order\Models;
 
 use Domain\Auth\Models\User;
+use Support\Casts\PriceCast;
+use Domain\Order\States\OrderState;
+use Domain\Order\Enums\OrderStatuses;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property OrderState $status
+ */
 class Order extends Model
 {
     protected $fillable = [
@@ -15,7 +22,24 @@ class Order extends Model
         'user_id',
         'delivery_type_id',
         'payment_method_id',
+        'status',
     ];
+
+    protected $attributes = [
+        'status' => 'new',
+    ];
+
+    protected $casts = [
+        'amount' => PriceCast::class,
+    ];
+
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            get: static fn(string $value) => OrderStatuses::from($value)
+                ->createState($this),
+        );
+    }
 
     public function user(): BelongsTo
     {

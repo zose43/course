@@ -30,8 +30,7 @@
                     <x-forms.text-input placeholder="Имя"
                                         name="customer[first_name]"
                                         :is-error="$errors->has('customer.first_name')"
-                                        value="{{ old('customer.first_name') }}"
-                                        required>
+                                        value="{{ old('customer.first_name') }}">
                     </x-forms.text-input>
                     @error('customer.first_name')
                     <x-forms.error>
@@ -43,8 +42,7 @@
                     <x-forms.text-input placeholder="Фамилия"
                                         name="customer[last_name]"
                                         value="{{ old('customer.last_name') }}"
-                                        :is-error="$errors->has('customer.last_name')"
-                                        required>
+                                        :is-error="$errors->has('customer.last_name')">
                     </x-forms.text-input>
                     @error('customer.last_name')
                     <x-forms.error>
@@ -54,11 +52,10 @@
 
 
                     <x-forms.text-input placeholder="Номер телефона"
-                                        type="number"
+                                        type="string"
                                         name="customer[phone]"
                                         :is-error="$errors->has('customer.phone')"
-                                        value="{{ old('customer.phone') }}"
-                                        required>
+                                        value="{{ old('customer.phone') }}">
                     </x-forms.text-input>
                     @error('customer.phone')
                     <x-forms.error>
@@ -70,8 +67,7 @@
                                         type="email"
                                         name="customer[email]"
                                         :is-error="$errors->has('customer.email')"
-                                        value="{{ old('customer.email') }}"
-                                        required>
+                                        value="{{ old('customer.email') }}">
                     </x-forms.text-input>
                     @error('customer.email')
                     <x-forms.error>
@@ -100,22 +96,22 @@
                             class="mt-4 space-y-3"
                         >
                             <x-forms.text-input placeholder="Придумайте пароль"
+                                                name="password"
                                                 type="password"
-                                                :is-error="$errors->has('customer.password')"
-                                                name="customer[password]">
+                                                :is-error="$errors->has('password')">
                             </x-forms.text-input>
-                            @error('customer.password')
+                            @error('password')
                             <x-forms.error>
                                 {{$message}}
                             </x-forms.error>
                             @enderror
 
                             <x-forms.text-input placeholder="Повторите пароль"
+                                                name="password_confirmation"
                                                 type="password"
-                                                :is-error="$errors->has('customer.password_confirmation')"
-                                                name="customer[password_confirmation]">
+                                                :is-error="$errors->has('password_confirmation')">
                             </x-forms.text-input>
-                            @error('customer.password_confirmation')
+                            @error('password_confirmation')
                             <x-forms.error>
                                 {{$message}}
                             </x-forms.error>

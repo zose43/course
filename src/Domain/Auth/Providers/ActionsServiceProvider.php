@@ -2,7 +2,7 @@
 
 namespace Domain\Auth\Providers;
 
-use Carbon\Laravel\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Domain\Auth\Actions\GithubCallbackAction;
 use Domain\Auth\Actions\RegisterNewUserAction;
 use Domain\Auth\Contracts\RegisterNewUserContract;

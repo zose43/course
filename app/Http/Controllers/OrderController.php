@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use DomainException;
+use Domain\Order\DTOs\NewOrderDTO;
 use Illuminate\Http\RedirectResponse;
 use Domain\Order\Models\DeliveryType;
 use Domain\Order\Models\PaymentMethod;
+use App\Http\Requests\OrderFormRequest;
+use Domain\Order\Actions\NewOrderAction;
 
 class OrderController extends Controller
 {
@@ -24,8 +27,11 @@ class OrderController extends Controller
         ]);
     }
 
-    public function handle(): RedirectResponse
+    public function handle(OrderFormRequest $request, NewOrderAction $action): RedirectResponse
     {
+        $dto = NewOrderDTO::fromRequest($request);
+        $order = $action($dto);
+
         return redirect()
             ->route('home');
     }

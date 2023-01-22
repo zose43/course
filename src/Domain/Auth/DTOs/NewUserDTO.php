@@ -2,10 +2,11 @@
 
 namespace Domain\Auth\DTOs;
 
+use App\Contracts\DTO;
 use Support\Traits\DTOs\Makeable;
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewUserDTO
+class NewUserDTO implements DTO
 {
     use Makeable;
 

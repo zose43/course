@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Domain\Order\Rules\PhoneRule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\RequiredIf;
 
-class OrderRequest extends FormRequest
+class OrderFormRequest extends FormRequest
 {
+    // todo add localization for messages
     public function rules(): array
     {
         /** email:dns --> check domain */
@@ -16,16 +19,21 @@ class OrderRequest extends FormRequest
             'customer.last_name' => ['required'],
             'customer.email' => ['required', 'email:dns'],
             'customer.phone' => ['required', new PhoneRule()],
-            'customer.address' => ['sometimes'],
-            'customer.city' => ['sometimes'],
+            'customer.address' => $this->checkDeliveryAddresses(),
+            'customer.city' => $this->checkDeliveryAddresses(),
             'create_account' => ['bool'],
-            'password' => request()?->boolean('create_account')
-                ? ['required', 'confirmed', Password::defaults()]
-                : ['sometimes'],
+            'password' => Rule::when($this->boolean('create_account'),
+                ['required', 'confirmed', Password::defaults()],
+                ['sometimes']),
             'delivery' => ['required', 'exists:delivery_types,id'],
-            'payment' => ['required', 'exists:payment:methods,id'],
+            'payment' => ['required', 'exists:payment_methods,id'],
         ];
-        // todo in sometimes props add condition via callback
+    }
+
+    protected function checkDeliveryAddresses(): RequiredIf
+    {
+        /** don't change id, it is a delivery point */
+        return Rule::requiredIf(fn() => $this->get('delivery') !== '1');
     }
 
     public function authorize(): bool

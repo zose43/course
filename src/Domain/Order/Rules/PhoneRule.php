@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Rules;
+namespace Domain\Order\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
 class PhoneRule implements Rule
 {
-    public function __construct() {}
+    public function passes($attribute, mixed $value): bool
+    {
+        $number = preg_replace('/^(8|\+7)/', '', $value);
 
-    public function passes($attribute, $value): bool {}
+        return preg_match('/\d/', $number) && strlen($number) === 10;
+    }
 
     public function message(): string
     {
-        return 'The validation error message.';
+        return 'Введите номер телефона';
     }
 }

@@ -17,20 +17,6 @@ final class OrderProcess
 
     public function __construct(public Order $order) {}
 
-    protected function callback(): Order
-    {
-        return app(Pipeline::class)
-            ->send(Order::class)
-            ->through($this->processes)
-            ->thenReturn();
-    }
-
-    protected function finished(Order $order): void
-    {
-        flash()->info("Заказ #$order->id создан успешно");
-        event(new OrderCreatedEvent($order));
-    }
-
     public function processes(array $processes): self
     {
         $this->processes = $processes;
@@ -41,8 +27,16 @@ final class OrderProcess
     public function dispatch(): Order
     {
         return Transaction::run(
-            [$this, 'callback'],
-            [$this, 'finished']($this->order),
+            function () {
+                return app(Pipeline::class)
+                    ->send($this->order)
+                    ->through($this->processes)
+                    ->thenReturn();
+            },
+            static function (Order $order) {
+                flash()->info("Заказ #$order->id создан успешно");
+                event(new OrderCreatedEvent($order));
+            },
             static function (Exception $e) {
                 $message = app()->isProduction() ? 'Что-то пошло не так, попробуйте еще раз' : $e->getMessage();
                 throw new DomainException($message);

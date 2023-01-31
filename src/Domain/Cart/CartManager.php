@@ -23,6 +23,35 @@ class CartManager
         app()->bind(CartIdentityStorageContract::class, FakeIdentityStorage::class);
     }
 
+    private function cacheKey(): string
+    {
+        return str('cart_' . $this->identityStorage->get())
+            ->slug('_')
+            ->value();
+    }
+
+    private function storedData(string $id): array
+    {
+        $data = ['storage_id' => $id];
+        if (auth()->check()) {
+            $data['user_id'] = auth()->user()->id;
+        }
+
+        return $data;
+    }
+
+    private function stringedOptionValues(array $optionValues): string
+    {
+        sort($optionValues);
+
+        return implode(';', $optionValues);
+    }
+
+    private function forgetCache(): void
+    {
+        cache()->forget($this->cacheKey());
+    }
+
     public function add(Product $product, int $quantity, array $optionValues = []): Cart
     {
         $cart = Cart::updateOrCreate([
@@ -112,8 +141,10 @@ class CartManager
         }
 
         return $cart->cartItems()
-            ->with(['product', 'optionValues.option'])
-            ->get();
+            ->with([
+                'product',
+                'optionValues.option'
+            ])->get();
     }
 
     public function count(): int
@@ -128,35 +159,6 @@ class CartManager
             $this->cartItems()
                 ->sum(fn(CartItem $item) => $item->amount->getRaw())
         );
-    }
-
-    private function cacheKey(): string
-    {
-        return str('cart_' . $this->identityStorage->get())
-            ->slug('_')
-            ->value();
-    }
-
-    private function forgetCache(): void
-    {
-        cache()->forget($this->cacheKey());
-    }
-
-    private function stringedOptionValues(array $optionValues): string
-    {
-        sort($optionValues);
-
-        return implode(';', $optionValues);
-    }
-
-    private function storedData(string $id): array
-    {
-        $data = ['storage_id' => $id];
-        if (auth()->check()) {
-            $data['user_id'] = auth()->user()->id;
-        }
-
-        return $data;
     }
 
     public function updateStorageId(string $old, string $current): void

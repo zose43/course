@@ -25,7 +25,7 @@ final class Transaction
                 DB::commit();
 
                 if (!is_null($finished)) {
-                    $finished();
+                    $finished($result);
                 }
             });
         } catch (Exception $e) {

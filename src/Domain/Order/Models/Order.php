@@ -36,7 +36,7 @@ class Order extends Model
     public function status(): Attribute
     {
         return Attribute::make(
-            get: static fn(string $value) => OrderStatuses::from($value)
+            get: fn(string $value) => OrderStatuses::from($value)
                 ->createState($this),
         );
     }

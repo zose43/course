@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Domain\Product\Models\Product;
 use Support\enums\Paths;
 use Illuminate\Support\Carbon;
 use Domain\Catalog\Models\Brand;
+use Domain\Product\Models\Product;
 use Support\Traits\Factories\HasSorting;
 use Support\Traits\Factories\HasMainPage;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -32,6 +32,7 @@ class ProductFactory extends Factory
             'on_main_page' => $this->faker->boolean(),
             'sorting' => $this->faker->numberBetween(1, 999),
             'text' => $this->faker->realText(),
+            'quantity' => $this->faker->numberBetween(0, 20),
         ];
     }
 

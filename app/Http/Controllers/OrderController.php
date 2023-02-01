@@ -7,6 +7,7 @@ use Domain\Order\DTOs\NewOrderDTO;
 use Illuminate\Http\RedirectResponse;
 use Domain\Order\Models\DeliveryType;
 use Domain\Order\DTOs\NewCustomerDTO;
+use Domain\Order\Processes\ClearCart;
 use Domain\Order\Models\PaymentMethod;
 use App\Http\Requests\OrderFormRequest;
 use Domain\Order\Actions\NewOrderAction;
@@ -45,10 +46,9 @@ class OrderController extends Controller
             new AssignCustomer($dtoCustomer),
             new AssignProducts(),
             new ChangeStateToPending(),
-            new DecreaseProductQuantity()
+            new DecreaseProductQuantity(),
+            new ClearCart()
         ])->dispatch();
-
-        cart()->truncate();
 
         return redirect()
             ->route('home');

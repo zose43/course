@@ -6,6 +6,7 @@ use Fruitcake\Cors\HandleCors;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
+use App\Http\Middleware\SeoMiddleware;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\Authorize;
@@ -60,6 +61,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            SeoMiddleware::class
         ],
 
         'api' => [

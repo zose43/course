@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Event;
+use App\Models\Seo;
+use App\Observers\SeoObserver;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Illuminate\Auth\Events\Registered;
@@ -17,6 +19,7 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         Brand::class => BrandObserver::class,
         Category::class => CategoryObserver::class,
+        Seo::class => SeoObserver::class
     ];
 
     protected $listen = [

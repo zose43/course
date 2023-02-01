@@ -19,10 +19,8 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::table('payments', static function (Blueprint $table) {
-            if (!app()->isProduction()) {
-                Schema::dropIfExists('payments');
-            }
-        });
+        if (!app()->isProduction()) {
+            Schema::dropIfExists('payments');
+        }
     }
 };

@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('payments', static function (Blueprint $table) {
+        Schema::create('payments', static function (Blueprint $table) {
             $table->id();
             $table->uuid('payment_id');
             $table->string('gateway');

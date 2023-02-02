@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Domain\Order\States\Payment\PaymentState;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
+/**
+ * @property PaymentState $state
+ */
 class Payment extends Model
 {
     use HasUlids;

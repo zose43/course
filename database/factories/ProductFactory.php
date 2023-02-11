@@ -20,10 +20,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'thumbnail' => $this->faker->localImage(
-                Paths::FIXTURE_PATH . '/images' . Paths::ProductImages->value,
-                Paths::ProductImages->value
-            ),
+            'thumbnail' => $this->faker->localImage(Paths::ProductImages->value),
             'price' => $this->faker->numberBetween(convertPrice(500), convertPrice(90000)),
             'title' => ucfirst($this->faker->words(2, true)),
             'created_at' => Carbon::now(),

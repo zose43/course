@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FakerImageProvider extends Base
 {
-    public function localImage(string $fixture, string $storageDir): string
+    public function localImage(string $storageDir): string
     {
         $storage = Storage::disk('images');
         if (!$storage->exists($storageDir)) {
@@ -16,11 +16,11 @@ class FakerImageProvider extends Base
         }
 
         $file = $this->generator->file(
-            $fixture,
+            Paths::FIXTURE_PATH . '/images' . $storageDir,
             $storage->path($storageDir),
             false
         );
 
-        return Paths::STORAGE_IMAGES . "$storageDir/$file";
+        return $storageDir . '/' . $file;
     }
 }

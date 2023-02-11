@@ -8,5 +8,4 @@ enum Paths: string
     case BrandImages = '/brands';
 
     public const FIXTURE_PATH = 'tests/Fixtures/';
-    public const STORAGE_IMAGES = '/storage/images';
 }

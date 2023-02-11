@@ -20,10 +20,7 @@ class BrandFactory extends Factory
     {
         return [
             'title' => $this->faker->company(),
-            'thumbnail' => $this->faker->localImage(
-                Paths::FIXTURE_PATH . '/images' . Paths::BrandImages->value,
-                Paths::BrandImages->value
-            ),
+            'thumbnail' => $this->faker->localImage(Paths::BrandImages->value),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'on_main_page' => $this->faker->boolean(),

@@ -65,4 +65,15 @@ if (!function_exists('convertPrice')) {
             return app(CartManager::class);
         }
     }
+
+    if (!function_exists('thumbnail')) {
+        function thumbnail(string $path): string
+        {
+            if (str_contains($path, 'storage/images')) {
+                return $path;
+            }
+
+            return Storage::disk('images')->url($path);
+        }
+    }
 }

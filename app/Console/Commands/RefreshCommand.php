@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Leeto\MoonShine\Models\MoonshineUser;
 
 class RefreshCommand extends Command
 {
@@ -27,7 +29,13 @@ class RefreshCommand extends Command
         foreach ($dirs as $dir) {
             File::cleanDirectory($dir);
         }
+
         $this->call('migrate:fresh', ['--seed' => true]);
+        MoonshineUser::query()->create([
+            'email' => 'admin@ya.ru',
+            'name' => 'zose',
+            'password' => Hash::make('zose'),
+        ]);
 
         return self::SUCCESS;
     }

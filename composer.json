@@ -17,6 +17,7 @@
         "laravel/socialite": "^5.6.1",
         "laravel/telescope": "^4.13.1",
         "laravel/tinker": "^2.8",
+        "lee-to/moonshine": "^1.26",
         "sentry/sentry-laravel": "^3.2",
         "spatie/laravel-model-states": "^2.4.4",
         "spatie/laravel-view-models": "^1.5.4"
